@@ -1,7 +1,12 @@
 package com.zhiyou100.doccloudweb.controller;
 
+import com.zhiyou100.doccloudweb.dao.DocRepository;
+
+import com.zhiyou100.doccloudweb.entity.Doc;
+import com.zhiyou100.doccloudweb.service.DocService;
 import com.zhiyou100.doccloudweb.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,18 +14,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.Optional;
 
 @Controller  //表示是controller层--业务层
 @RequestMapping("/doc")
 @Slf4j
 public class DocController {
+
+    @Autowired
+    private DocService docService;
+
     //定义合法的文件后缀类型
     public static final String[] DOC_SUFFIXS= new String[]{"doc", "docx", "ppt", "pptx", "txt", "xls", "xlsx", "pdf"};
     //定义文件最大大小
     public static final int DOC_MAX_SIZE = 128*1024*1024;
+
+
+    @RequestMapping("/doclist")
+    @ResponseBody
+    Doc doList(){
+        Optional<Doc> id = docService.findById(1);
+        return id.get();
+    }
+
+
+
     //方法级别映射，必须有，那么这个方法的访问地址就是/test/aaa，
     // 请求到的页面就是test.jsp【当然，这里的.jsp需要在配置文件中配置】
     @RequestMapping("/helloworld")
