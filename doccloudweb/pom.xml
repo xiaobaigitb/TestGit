@@ -69,6 +69,17 @@
             <artifactId>spring-context</artifactId>
             <version>5.0.6.RELEASE</version>
         </dependency>
+        <!--上传文件到hdfs上-->
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>2.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-hdfs</artifactId>
+            <version>2.7.5</version>
+        </dependency>
     </dependencies>
 
     <!--编译、打jar包-->

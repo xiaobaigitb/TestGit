@@ -1,6 +1,7 @@
 package com.zhiyou100.doccloudweb.entity;
 
 import lombok.Data;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -26,7 +27,7 @@ public class Doc {
     @Column(name = "doc_status")
     private String docStatus;
     @Column(name = "doc_size")
-    private String docSize;
+    private int docSize;
     @Column(name = "doc_dir")
     private String docDir;
     @Column(name = "user_id")

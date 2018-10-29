@@ -1,10 +1,9 @@
 package com.zhiyou100.doccloudweb.controller;
 
-import com.zhiyou100.doccloudweb.dao.DocRepository;
-
-import com.zhiyou100.doccloudweb.entity.Doc;
 import com.zhiyou100.doccloudweb.service.DocService;
+import com.zhiyou100.doccloudweb.util.HdfsUtil;
 import com.zhiyou100.doccloudweb.util.MD5Util;
+import com.zhiyou100.doccloudweb.entity.Doc;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
+import java.util.Random;
 
 @Controller  //表示是controller层--业务层
 @RequestMapping("/doc")
@@ -28,13 +30,19 @@ public class DocController {
     public static final String[] DOC_SUFFIXS= new String[]{"doc", "docx", "ppt", "pptx", "txt", "xls", "xlsx", "pdf"};
     //定义文件最大大小
     public static final int DOC_MAX_SIZE = 128*1024*1024;
+    //定义文件保存到hdfs上的根目录
+    public static final String HOME="hdfs://192.168.228.13:9000/doccloud";
 
 
     @RequestMapping("/doclist")
     @ResponseBody
     Doc doList(){
-        Optional<Doc> id = docService.findById(1);
-        return id.get();
+        //Optional:是一个集合，可能空指针--需要判断
+        Optional<Doc> doc = docService.findById(1);
+        if (doc.isPresent()){
+            return doc.get();
+        }
+        return null;
     }
 
 
@@ -48,6 +56,8 @@ public class DocController {
     String helloworld(){
         return "helloword";
     }
+
+
 
     @RequestMapping("/upload")
     @ResponseBody
@@ -81,6 +91,53 @@ public class DocController {
             //3.计算文档的MD5值
             String md5 = getMD5(bytes);
             log.info("file is md5 {} ",md5);
+            //用户上传文件，保存到数据库
+            //1.校验数据库中的md5值，判断数据库中是否存在
+            Optional<Doc> doc = docService.findByMd5(md5);
+            if (doc.isPresent()){
+                //2.如果存在，更新
+                // 2.1获取文件对象
+                Doc docEntity = doc.get();
+                //2.2设置文件更新的人
+                docEntity.setUserId(new Random().nextInt());
+                //2.3保存到数据库
+                docService.save(docEntity);
+            }else {
+                //3.如果不存在,将文件元数据保存到数据库，将数据保存到hdfs
+                //3.1保存数据到hdfs
+                //3.1.1生成文件保存路径:HOME+当前时间
+                String date = getDate();
+                String dst = HOME+"/"+date+"/"+file.getOriginalFilename()+"/";
+                log.info("file dst {}",dst);
+                //3.1.2上传文件
+                HdfsUtil.upload(bytes,file.getOriginalFilename(),dst);
+                //3.2将元数据保存到数据库
+                //3.2.1创建一个文件对象
+                Doc docEntity = new Doc();
+                //3.2.2设置作者
+                docEntity.setUserId(new Random().nextInt());
+                //3.2.3设置备注
+                docEntity.setDocComment("hadoop");
+                //3.2.4设置文件路径
+                docEntity.setDocDir(dst);
+                //3.2.5设置文件名
+                docEntity.setDocName(filename);
+                //3.2.6设置文件大小
+                docEntity.setDocSize(bytes.length);
+                //3.2.7设置文件权限
+                docEntity.setDocPermission("1");
+                //3.2.8设置文件类型（后缀）
+                docEntity.setDocType(suffix);
+                //3.2.9设置文件状态
+                docEntity.setDocStatus("upload");
+                //3.2.10设置文件的md5值--保证文件的唯一性
+                docEntity.setMd5(md5);
+                //3.2.11设置文件创作时间
+                docEntity.setDocCreateTime(new Date());
+                //3.2.12保存元数据
+                docService.save(docEntity);
+
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,6 +152,17 @@ public class DocController {
 //            e.printStackTrace();
 //        }
         return "upload success";
+    }
+
+    /**
+     * 获取当前是时间，用于文件的保存路径
+     * @return
+     */
+    private String getDate() {
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return simpleDateFormat.format(date);
+
     }
 
     /**
