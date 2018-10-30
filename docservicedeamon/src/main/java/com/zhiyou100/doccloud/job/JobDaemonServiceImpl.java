@@ -68,7 +68,7 @@ public class JobDaemonServiceImpl implements JobDaemonService,Runnable{
                     e.printStackTrace();
                 }
             }else {
-                pool.submit((Runnable) new DocJobHandler(docJob));
+                pool.submit(new DocJobHandler(docJob));
             }
         }
     }

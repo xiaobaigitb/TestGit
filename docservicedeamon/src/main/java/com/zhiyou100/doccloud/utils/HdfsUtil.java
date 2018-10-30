@@ -2,15 +2,11 @@ package com.zhiyou100.doccloud.utils;
 
 import com.google.common.io.Resources;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IOUtils;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URI;
 
 public class HdfsUtil {
@@ -37,19 +33,10 @@ public class HdfsUtil {
      * @throws IOException
      */
     public static void copyToLocal(String dst,String localPath) throws IOException {
-        //String dest = "hdfs://localhost:9000/user/laozhao0/cite2.txt";
-        //String local = "/home/laozhao0/cite2.txt";
         Configuration conf = new Configuration();
         conf.addResource(Resources.getResource("core-site.xml"));
         FileSystem fs = FileSystem.get(URI.create(dst),conf);
         fs.copyToLocalFile(new Path(dst),new Path(localPath));
-//        FSDataInputStream fsdi = fs.open(new Path(dst));
-//        OutputStream output = new FileOutputStream(localPath);
-//        IOUtils.copyBytes(fsdi,output,4096,true);
         fs.close();
-    }
-
-    public static void main(String[] args) {
-
     }
 }
