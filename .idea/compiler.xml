@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="doccloudweb" />
+        <module name="docservicedeamon" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="doccloudweb" target="1.8" />
+      <module name="docservicedeamon" target="6" />
     </bytecodeTargetLevel>
   </component>
 </project>

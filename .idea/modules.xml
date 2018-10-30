@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DocCloud.iml" filepath="$PROJECT_DIR$/DocCloud.iml" />
       <module fileurl="file://$PROJECT_DIR$/doccloudweb/doccloudweb.iml" filepath="$PROJECT_DIR$/doccloudweb/doccloudweb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/docservicedeamon/docservicedeamon.iml" filepath="$PROJECT_DIR$/docservicedeamon/docservicedeamon.iml" />
     </modules>
   </component>
 </project>
