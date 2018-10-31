@@ -192,7 +192,7 @@ public class DocController {
         docJob.setFileName(docEntity.getDocName());
         //todo 将job元数据保存到数据库
         //获取动态代理对象
-        JobDaemonService jobDaemonService = RPC.getProxy(JobDaemonService.class, 1L, new InetSocketAddress("localhost", 7788), new Configuration());
+        JobDaemonService jobDaemonService = RPC.getProxy(JobDaemonService.class, JobDaemonService.versionID, new InetSocketAddress("localhost", 7788), new Configuration());
         //提交任务到服务器（hdfs上）
         log.info("submit job:{}",docJob);
         jobDaemonService.submitDocJob(docJob);

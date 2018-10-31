@@ -89,7 +89,7 @@ public class BdbPersistentQueue<E extends Serializable> extends AbstractQueue<E>
                 db,                                             // db
                 TupleBinding.getPrimitiveBinding(Long.class),   //Key 序列化类型
                 valueBinding,                                   // Value
-                true);                                          // allow write
+                true);                                // allow write
         //todo
         Long firstKey = ((StoredSortedMap<Long, E>) queueMap).firstKey();
         Long lastKey = ((StoredSortedMap<Long, E>) queueMap).lastKey();

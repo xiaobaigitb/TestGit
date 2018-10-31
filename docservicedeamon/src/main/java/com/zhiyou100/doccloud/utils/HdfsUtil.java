@@ -27,6 +27,21 @@ public class HdfsUtil {
     }
 
     /**
+     * 将本地文件上传到hdfs
+     * @param src
+     * @param dst
+     * @throws IOException
+     */
+    public static void copyFromLocal(String src,String dst) throws IOException {
+        Configuration coreSiteConf = new Configuration();
+        coreSiteConf.addResource(Resources.getResource("core-site.xml"));
+        //获取文件系统客户端对象
+        FileSystem fileSystem = FileSystem.get(coreSiteConf);
+        fileSystem.copyFromLocalFile(new Path(src),new Path(dst));
+        fileSystem.close();
+    }
+
+    /**
      * 将集群的问价下载到本地
      * @param dst
      * @param localPath

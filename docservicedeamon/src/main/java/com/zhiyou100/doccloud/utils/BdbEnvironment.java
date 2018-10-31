@@ -11,7 +11,7 @@ import com.sleepycat.je.EnvironmentConfig;
 /**
  * BDB数据库环境,可以缓存StoredClassCatalog并共享
  *
- * @contributor guoyun
+ * @contributor
  */
 public class BdbEnvironment extends Environment {
     StoredClassCatalog classCatalog;
