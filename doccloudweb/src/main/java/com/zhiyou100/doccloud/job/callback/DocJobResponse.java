@@ -13,7 +13,7 @@ import java.io.IOException;
 @Data
 public class DocJobResponse implements Writable {
     //文档的id
-    private int docJobId;
+    private String docJobId;
     //回调信息
     private String message;
     //状态是否成功
@@ -27,7 +27,7 @@ public class DocJobResponse implements Writable {
 
     @Override
     public void write(DataOutput out) throws IOException {
-        out.writeInt(docJobId);
+        out.writeUTF(docJobId);
         out.writeUTF(message);
         out.writeBoolean(success);
         out.writeInt(numOfPage);
@@ -37,7 +37,7 @@ public class DocJobResponse implements Writable {
 
     @Override
     public void readFields(DataInput in) throws IOException {
-        docJobId=in.readInt();
+        docJobId=in.readUTF();
         message=in.readUTF();
         success=in.readBoolean();
         numOfPage=in.readInt();

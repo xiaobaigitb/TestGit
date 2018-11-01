@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 import javax.servlet.MultipartConfigElement;
 import java.io.IOException;
 
-@SpringBootApplication
+@SpringBootApplication//<--容器外部
 public class DoccloudwebApplication {
     //容器外部
     public static void main(String[] args) throws IOException {

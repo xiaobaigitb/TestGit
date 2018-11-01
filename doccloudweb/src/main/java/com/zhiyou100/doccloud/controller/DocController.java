@@ -1,5 +1,7 @@
 package com.zhiyou100.doccloud.controller;
 
+import com.zhiyou100.doccloud.entity.DocJobEntity;
+import com.zhiyou100.doccloud.service.DocJobService;
 import com.zhiyou100.doccloud.service.DocService;
 import com.zhiyou100.doccloud.util.HdfsUtil;
 import com.zhiyou100.doccloud.util.MD5Util;
@@ -33,6 +35,8 @@ public class DocController {
 
     @Autowired
     private DocService docService;
+    @Autowired
+    private DocJobService docJobService;
 
     //定义合法的文件后缀类型
     public static final String[] DOC_SUFFIXS= new String[]{"doc", "docx", "ppt", "pptx", "txt", "xls", "xlsx", "pdf"};
@@ -53,6 +57,33 @@ public class DocController {
         return null;
     }
 
+    @RequestMapping("/view")
+    @ResponseBody
+    public String view(String md5) throws IOException {
+        //通过MD5获取文件对象
+        Optional<Doc> docOptional = docService.findByMd5(md5);
+        //如果文件存在，这获取文件实体
+        if (docOptional.isPresent()){
+            Doc doc = docOptional.get();
+            //获取文件名
+            String docName = doc.getDocName();
+            //获取文件在hdfs上的路径，没有文件名
+            String docDir = doc.getDocDir();
+            //制作PDF的文件名
+            String viewName = docName.substring(0,docName.indexOf("."))+".pdf";
+            //制作PDF的路径+名字
+            String viewPath = docDir+"/"+viewName;
+            log.info("view path:{}",viewPath);
+            //获取执行类所在的目录
+            String classPath = DocController.class.getClassLoader().getResource("").getPath();
+            log.info("class path:{}",classPath);
+            String relativeViewPath="/static/tmp/"+UUID.randomUUID().toString()+"/"+viewName;
+            String tmpViewPath=classPath+"/static/tmp/"+UUID.randomUUID().toString()+"/"+viewName;
+            HdfsUtil.download(viewPath,tmpViewPath);
+            return relativeViewPath;
+        }
+        return null;
+    }
 
 
     //方法级别映射，必须有，那么这个方法的访问地址就是/test/aaa，
@@ -110,6 +141,7 @@ public class DocController {
                 docEntity.setUserId(new Random().nextInt());
                 //2.3保存到数据库
                 docService.save(docEntity);
+                log.info("update doc is: {}",docEntity);
             }else {
                 //3.如果不存在,将文件元数据保存到数据库，将数据保存到hdfs
                 //3.1保存数据到hdfs
@@ -126,7 +158,7 @@ public class DocController {
                 //3.2.2设置作者
                 docEntity.setUserId(new Random().nextInt());
                 //3.2.3设置备注
-                docEntity.setDocComment("hadoop");
+                docEntity.setDocComment("hadoopClientCode");
                 //3.2.4设置文件路径
                 docEntity.setDocDir(dst);
                 //3.2.5设置文件名
@@ -144,11 +176,11 @@ public class DocController {
                 //3.2.11设置文件创作时间
                 docEntity.setDocCreateTime(new Date());
                 //3.2.12保存元数据
-                docService.save(docEntity);
+                Doc savedDoc = docService.save(docEntity);
                 //上传成功以后需要提交文档转换任务
-                //转换成html,
-                submitDocJob(docEntity,new Random().nextInt());
-
+                DocJob docJob = submitDocJob(savedDoc, new Random().nextInt());
+                //保存job信息
+                saveDocJob(docJob);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -167,11 +199,32 @@ public class DocController {
     }
 
     /**
+     *将文档任务实体保存到数据库中
+     * @param docJob
+     */
+    private void saveDocJob(DocJob docJob) {
+        //创建一个DocJob对象
+        DocJobEntity docJobEntity = new DocJobEntity();
+        //将客户端返回的id
+        docJobEntity.setId(docJob.getId());
+        docJobEntity.setJobStatus("running");
+        docJobEntity.setSubmitTime(docJob.getSubmitTime());
+        docJobEntity.setDocId(docJob.getDocId());
+        docJobEntity.setInput(docJob.getInput());
+        docJobEntity.setOutput(docJob.getOutput());
+        docJobEntity.setName(docJob.getName());
+        docJobEntity.setRetryTime(docJob.getRetryTime());
+        docJobEntity.setJobType(docJob.getJobType().name());
+        docJobEntity.setFileName(docJob.getFileName());
+        docJobEntity.setUserId(docJob.getUserId());
+        docJobService.save(docJobEntity);
+    }
+    /**
      * 提交任务到集群上运行--文档转换任务
      * @param docEntity
      * @param userId
      */
-    private void submitDocJob(Doc docEntity, int userId) throws IOException {
+    private DocJob submitDocJob(Doc docEntity, int userId) throws IOException {
         //创建一个文档转换任务对象
         DocJob docJob = new DocJob();
         //1.设置提交者
@@ -192,13 +245,18 @@ public class DocController {
         docJob.setRetryTime(4);
         //9.设置文件名
         docJob.setFileName(docEntity.getDocName());
+        //10.设置job的uuid
+        docJob.setId(UUID.randomUUID().toString());
+        //11.文件的id
+        docJob.setDocId(docEntity.getId());
         //todo 将job元数据保存到数据库
         //获取动态代理对象
         JobDaemonService jobDaemonService = RPC.getProxy(JobDaemonService.class, JobDaemonService.versionID, new InetSocketAddress("localhost", 7788), new Configuration());
         //提交任务到服务器（hdfs上）
         log.info("submit job:{}",docJob);
         jobDaemonService.submitDocJob(docJob);
-
+        //将文档任务返回
+        return docJob;
     }
 
     /**

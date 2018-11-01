@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script>
+    function getQueryString(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
+    }
+$(document).ready(function () {
+    console.log("start to view")
+    //获取请求字段
+    var md5=getQueryString("md5");
+    console.log("doc md5 is:"+md5)
+    $.ajax({
+        method:'post',
+        url:"/doc/view?md5="+md5,
+        success:function (res) {
+            console.log(res)
+            $('iframe').attr('src',res);
+        }
+    })
+})
+</script>
+
+<body>
+<div style="margin: 0 auto;height: 580px;width:800px;">
+    <iframe id="main" src="#" frameborder="0" scrolling="no" height="580" width="800">
+        This browser does not support PDFs. Please download the PDF to view it: <a href="/index.pdf">Download PDF</a>
+    </iframe>
+</div>
+</body>
+</html>

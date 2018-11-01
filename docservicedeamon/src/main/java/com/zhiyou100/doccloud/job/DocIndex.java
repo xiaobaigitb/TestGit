@@ -11,7 +11,7 @@ import org.apache.solr.client.solrj.beans.Field;
 public class DocIndex {
     @Field
     //文章id--自带，因为数据库要有，但是用不到
-    private String id;
+    private int id;
     @Field
     //文章名--添加
     private String docName;

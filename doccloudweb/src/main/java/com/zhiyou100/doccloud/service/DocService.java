@@ -24,7 +24,7 @@ public class DocService {
     }
 
     //保存文件对象到数据库
-    public void save(Doc docEntity) {
-        docRepository.save(docEntity);
+    public Doc save(Doc docEntity) {
+        return docRepository.save(docEntity);
     }
 }

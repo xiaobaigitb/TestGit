@@ -34,7 +34,7 @@ public class FullTextIndexUtil {
     public static void main(String[] args) throws IOException, SolrServerException {
         DocIndex docIndex = new DocIndex();
         docIndex.setDocContent("中国人当自强");
-        docIndex.setId("chain");
+        docIndex.setId(1);
         docIndex.setDocName("英雄");
         docIndex.setUrl("hhh");
         docIndex.setDocType("docx");

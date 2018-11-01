@@ -1,5 +1,6 @@
 package com.zhiyou100.doccloud.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
@@ -15,7 +16,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
-
+@Slf4j
 public class PdfUtil {
 
 
@@ -26,13 +27,24 @@ public class PdfUtil {
      * @return
      * @throws IOException
      */
-    public static int getNumberOfPages(String filePath) throws IOException {
-        System.out.println(filePath);
-        PDDocument pdDocument = PDDocument.load(new File(filePath));
+    public static int getNumberOfPages(String filePath) throws IOException, InterruptedException {
+        int retry=0;
+        while ((retry++)<500){
+            File file = new File(filePath);
+            if (!file.exists()){
+                log.info("wait filesystem load file,retry time:{}",retry);
+                Thread.sleep(2000);
+            }else {
+                System.out.println(filePath);
+                PDDocument pdDocument = PDDocument.load(new File(filePath));
 
-        int pages = pdDocument.getNumberOfPages();
-        pdDocument.close();
-        return pages;
+                int pages = pdDocument.getNumberOfPages();
+                pdDocument.close();
+                return pages;
+            }
+        }
+
+        throw new IOException("can not get "+filePath+"page");
     }
 
     /**

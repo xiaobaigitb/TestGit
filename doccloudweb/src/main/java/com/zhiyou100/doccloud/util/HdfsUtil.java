@@ -30,4 +30,21 @@ public class HdfsUtil {
         fsDataOutputStream.close();
         fileSystem.close();
     }
+    public static void copyFromLocal(String src,String dst) throws IOException {
+        Configuration coreSiteConf = new Configuration();
+        coreSiteConf.addResource(Resources.getResource("core-site.xml"));
+        //获取文件系统客户端对象
+        FileSystem fileSystem = FileSystem.get(coreSiteConf);
+        fileSystem.copyFromLocalFile(new Path(src),new Path(dst));
+        fileSystem.close();
+    }
+    public static void download(String input,String output) throws IOException {
+        Configuration coreSiteConf = new Configuration();
+        coreSiteConf.addResource(Resources.getResource("core-site.xml"));
+        //获取文件系统客户端对象
+        FileSystem fileSystem = FileSystem.get(coreSiteConf);
+
+        fileSystem.copyToLocalFile(new Path(input),new Path(output));
+        fileSystem.close();
+    }
 }

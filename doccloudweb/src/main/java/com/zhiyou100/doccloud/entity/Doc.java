@@ -37,5 +37,8 @@ public class Doc {
     private String docComment;
     @Column(name = "doc_permission")
     private String docPermission;
-
+    @Column(name="num_of_page")
+    private int numOfPage;
+    @Column(name = "job_type")
+    private String jobType;
 }

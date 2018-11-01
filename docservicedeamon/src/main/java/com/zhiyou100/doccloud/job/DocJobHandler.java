@@ -77,7 +77,7 @@ public class DocJobHandler implements Runnable {
             //设置文档名--索引字段
             docIndex.setDocName(docJob.getFileName());
             //设置文档id--没有用
-            docIndex.setId("docCloud");
+            docIndex.setId(docJob.getDocId());
             //设置文档在hdfs上的路径--不建立索引
             docIndex.setUrl(tmpWorkDir.getAbsolutePath()+"/"+docJob.getFileName());
             //设置文档类型(文档后缀)--索引字段
@@ -97,12 +97,19 @@ public class DocJobHandler implements Runnable {
             HdfsUtil.copyFromLocal(thumbnailsPath,docJob.getOutput());
             log.info("upload {} to hdfs:", thumbnailsPath);
             //step7 清理临时目录
-            log.info("clear tmpworkdir : {}",tmpWorkDir.getAbsolutePath());
+            log.info("start clear tmpworkdir : {}",tmpWorkDir.getAbsolutePath());
             //deleteTmpWorkDir(tmpWorkDir);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             //java自带的delete不支持递归删除，使用common的工具类删除
             FileUtils.deleteDirectory(tmpWorkDir);
+            log.info("delete tmpworkdir {} success",tmpWorkDir.getAbsolutePath());
             //step8 任务成功回调
             reportDocJob(numberOfPages,docJob,true,"success");
+            log.info("start report docJob: {}",docJob.getName());
         } catch (Exception e) {
             //e.printStackTrace();
             //任务执行失败处理
@@ -113,7 +120,6 @@ public class DocJobHandler implements Runnable {
                 log.info("report docjob {} failed to web:{}",e1.getMessage());
             }
         }
-
     }
     /**
      * 将报告job成功与否
@@ -140,10 +146,10 @@ public class DocJobHandler implements Runnable {
         //设置结束时间--当前时间
         docJobResponse.setFinishTime(System.nanoTime());
         //通过RPC通信发出请求
-        DocJobCallBack loaclhost = RPC.getProxy(DocJobCallBack.class, DocJobCallBack.versionID, new InetSocketAddress("localhost", 8877), new Configuration());
+        DocJobCallBack jobCallback = RPC.getProxy(DocJobCallBack.class, DocJobCallBack.versionID, new InetSocketAddress("localhost", 8877), new Configuration());
         log.info("report job:{} to web : {}",docJob,docJobResponse);
         //将回调信息发送到服务器
-        loaclhost.reportDocJob(docJobResponse);
+        jobCallback.reportDocJob(docJobResponse);
     }
 
     private void convertToHtml(String fileName, File tmpWorkDir) throws IOException {
