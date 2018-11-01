@@ -6,6 +6,7 @@ import com.zhiyou100.doccloud.utils.FullTextIndexUtil;
 import com.zhiyou100.doccloud.utils.HdfsUtil;
 import com.zhiyou100.doccloud.utils.PdfUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.ipc.RPC;
@@ -43,7 +44,7 @@ public class DocJobHandler implements Runnable {
         String tmpWorkDirPath = "/tmp/docjobdaemon/" + UUID.randomUUID().toString() + "/";
         File tmpWorkDir = new File(tmpWorkDirPath);
         tmpWorkDir.mkdirs();
-        System.out.println("tmpWorkDirPath: "+tmpWorkDirPath);
+        //System.out.println("tmpWorkDirPath: "+tmpWorkDirPath);
         //1.3下载文件到临时目录
         try {
             HdfsUtil.copyToLocal(input,tmpWorkDirPath);
@@ -86,20 +87,24 @@ public class DocJobHandler implements Runnable {
 
             //利用solr开始创建索引
             FullTextIndexUtil.add(docIndex);
+            log.info("doc index: {}",docIndex);
 
             //step6 上传文档-HTML、PDF、png
-            HdfsUtil.copyFromLocal(htmlPath,docJob.getInput());
+            HdfsUtil.copyFromLocal(htmlPath,docJob.getOutput());
             log.info("upload {} to hdfs:", htmlPath);
-            HdfsUtil.copyFromLocal(pdfPath,docJob.getInput());
+            HdfsUtil.copyFromLocal(pdfPath,docJob.getOutput());
             log.info("upload {} to hdfs:", pdfPath);
-            HdfsUtil.copyFromLocal(thumbnailsPath,docJob.getInput());
+            HdfsUtil.copyFromLocal(thumbnailsPath,docJob.getOutput());
             log.info("upload {} to hdfs:", thumbnailsPath);
             //step7 清理临时目录
             log.info("clear tmpworkdir : {}",tmpWorkDir.getAbsolutePath());
-            tmpWorkDir.delete();
+            //deleteTmpWorkDir(tmpWorkDir);
+            //java自带的delete不支持递归删除，使用common的工具类删除
+            FileUtils.deleteDirectory(tmpWorkDir);
             //step8 任务成功回调
-            reportDocJob(numberOfPages,docJob,true,null);
+            reportDocJob(numberOfPages,docJob,true,"success");
         } catch (Exception e) {
+            //e.printStackTrace();
             //任务执行失败处理
             try {
                 reportDocJob(0,docJob,false,e.getMessage());
@@ -110,7 +115,6 @@ public class DocJobHandler implements Runnable {
         }
 
     }
-
     /**
      * 将报告job成功与否
      * @param numberOfPages
@@ -136,7 +140,7 @@ public class DocJobHandler implements Runnable {
         //设置结束时间--当前时间
         docJobResponse.setFinishTime(System.nanoTime());
         //通过RPC通信发出请求
-        DocJobCallBack loaclhost = RPC.getProxy(DocJobCallBack.class, DocJobCallBack.versionID, new InetSocketAddress("loaclhost", 8877), new Configuration());
+        DocJobCallBack loaclhost = RPC.getProxy(DocJobCallBack.class, DocJobCallBack.versionID, new InetSocketAddress("localhost", 8877), new Configuration());
         log.info("report job:{} to web : {}",docJob,docJobResponse);
         //将回调信息发送到服务器
         loaclhost.reportDocJob(docJobResponse);

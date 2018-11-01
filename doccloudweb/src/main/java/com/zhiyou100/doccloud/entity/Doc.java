@@ -1,4 +1,4 @@
-package com.zhiyou100.doccloud.doccloudweb.entity;
+package com.zhiyou100.doccloud.entity;
 
 import lombok.Data;
 

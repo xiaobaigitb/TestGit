@@ -1,8 +1,10 @@
 package com.zhiyou100.doccloud.utils;
 
+import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
+import org.apache.pdfbox.text.PDFTextStripper;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -12,7 +14,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.Iterator;
 
 public class PdfUtil {
@@ -27,9 +28,10 @@ public class PdfUtil {
      */
     public static int getNumberOfPages(String filePath) throws IOException {
         System.out.println(filePath);
-        PDDocument pdfReader = PDDocument.load(new File(filePath));
+        PDDocument pdDocument = PDDocument.load(new File(filePath));
 
-        int pages = pdfReader.getNumberOfPages();
+        int pages = pdDocument.getNumberOfPages();
+        pdDocument.close();
         return pages;
     }
 
@@ -39,8 +41,8 @@ public class PdfUtil {
      * @param filePath
      * @return
      */
-    public static String getContent(String filePath) {
-        PDFParser pdfParser = new PDFParser(new RandomAccessFile(new File(filePath), "rw"));
+    public static String getContent(String filePath) throws IOException {
+        PDFParser pdfParser = new PDFParser(new org.apache.pdfbox.io.RandomAccessFile(new File(filePath), "rw"));
         pdfParser.parse();
         PDDocument pdDocument = pdfParser.getPDDocument();
         String text = new PDFTextStripper().getText(pdDocument);
@@ -74,7 +76,7 @@ public class PdfUtil {
         imageout.flush();
         imageout.close();
         //Warning: You did not close a PDF Document
-        //pdDocument.close();
+        pdDocument.close();
     }
 
     public static void main(String[] args) throws IOException {

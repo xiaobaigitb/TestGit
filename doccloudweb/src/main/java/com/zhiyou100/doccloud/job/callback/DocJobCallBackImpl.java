@@ -12,6 +12,7 @@ public class DocJobCallBackImpl implements DocJobCallBack {
     public void reportDocJob(DocJobResponse docJobResponse) {
         //todo
         //将修改数据库中job的状态
+        System.out.println(docJobResponse);
     }
 
     @Override

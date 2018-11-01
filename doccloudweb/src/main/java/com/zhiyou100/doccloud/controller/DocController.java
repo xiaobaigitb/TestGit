@@ -1,9 +1,9 @@
-package com.zhiyou100.doccloud.doccloudweb.controller;
+package com.zhiyou100.doccloud.controller;
 
-import com.zhiyou100.doccloud.doccloudweb.service.DocService;
-import com.zhiyou100.doccloud.doccloudweb.util.HdfsUtil;
-import com.zhiyou100.doccloud.doccloudweb.util.MD5Util;
-import com.zhiyou100.doccloud.doccloudweb.entity.Doc;
+import com.zhiyou100.doccloud.service.DocService;
+import com.zhiyou100.doccloud.util.HdfsUtil;
+import com.zhiyou100.doccloud.util.MD5Util;
+import com.zhiyou100.doccloud.entity.Doc;
 import com.zhiyou100.doccloud.job.DocJob;
 import com.zhiyou100.doccloud.job.DocJobType;
 import com.zhiyou100.doccloud.job.JobDaemonService;
@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
 
 @Controller  //表示是controller层--业务层
 @RequestMapping("/doc")
@@ -114,7 +115,8 @@ public class DocController {
                 //3.1保存数据到hdfs
                 //3.1.1生成文件保存路径:HOME+当前时间
                 String date = getDate();
-                String dst = HOME+"/"+date+"/"+file.getOriginalFilename()+"/";
+                //String dst = HOME+"/"+date+"/"+file.getOriginalFilename()+"/";
+                String dst=HOME+"/"+date+"/"+UUID.randomUUID().toString()+"/";
                 log.info("file dst {}",dst);
                 //3.1.2上传文件
                 HdfsUtil.upload(bytes,file.getOriginalFilename(),dst);

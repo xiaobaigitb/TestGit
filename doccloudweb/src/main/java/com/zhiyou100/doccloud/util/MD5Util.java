@@ -1,4 +1,4 @@
-package com.zhiyou100.doccloud.doccloudweb.util;
+package com.zhiyou100.doccloud.util;
 
 import java.io.File;
 import java.io.FileInputStream;

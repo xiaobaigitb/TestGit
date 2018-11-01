@@ -1,4 +1,4 @@
-package com.zhiyou100.doccloud.doccloudweb.util;
+package com.zhiyou100.doccloud.util;
 
 import com.google.common.io.Resources;
 import org.apache.hadoop.conf.Configuration;

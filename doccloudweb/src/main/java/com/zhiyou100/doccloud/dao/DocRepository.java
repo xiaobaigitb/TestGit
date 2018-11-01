@@ -1,6 +1,6 @@
-package com.zhiyou100.doccloud.doccloudweb.dao;
+package com.zhiyou100.doccloud.dao;
 
-import com.zhiyou100.doccloud.doccloudweb.entity.Doc;
+import com.zhiyou100.doccloud.entity.Doc;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

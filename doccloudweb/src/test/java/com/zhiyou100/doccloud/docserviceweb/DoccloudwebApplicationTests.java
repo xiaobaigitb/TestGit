@@ -1,4 +1,4 @@
-package com.zhiyou100.doccloud.doccloudweb;
+package com.zhiyou100.doccloud.docserviceweb;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

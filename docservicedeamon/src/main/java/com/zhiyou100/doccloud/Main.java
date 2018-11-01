@@ -1,4 +1,4 @@
-package com.zhiyou100.doccloud.docservicedeamon;
+package com.zhiyou100.doccloud;
 
 import com.zhiyou100.doccloud.job.JobDaemonService;
 import com.zhiyou100.doccloud.job.JobDaemonServiceImpl;

@@ -1,7 +1,7 @@
-package com.zhiyou100.doccloud.doccloudweb.service;
+package com.zhiyou100.doccloud.service;
 
-import com.zhiyou100.doccloud.doccloudweb.dao.DocRepository;
-import com.zhiyou100.doccloud.doccloudweb.entity.Doc;
+import com.zhiyou100.doccloud.dao.DocRepository;
+import com.zhiyou100.doccloud.entity.Doc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
