@@ -99,6 +99,7 @@ public class DocJobHandler implements Runnable {
             //step7 清理临时目录
             log.info("start clear tmpworkdir : {}",tmpWorkDir.getAbsolutePath());
             //deleteTmpWorkDir(tmpWorkDir);
+            //TODO：删除之前要睡一下，不然有可能不能删除干净。
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {

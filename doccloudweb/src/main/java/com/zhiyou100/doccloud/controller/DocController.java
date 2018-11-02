@@ -11,7 +11,11 @@ import com.zhiyou100.doccloud.job.DocJobType;
 import com.zhiyou100.doccloud.job.JobDaemonService;
 import com.zhiyou100.doccloud.job.JobStatus;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataInputStream;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.ipc.RPC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,13 +24,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Optional;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 @Controller  //表示是controller层--业务层
 @RequestMapping("/doc")
@@ -57,6 +62,83 @@ public class DocController {
         return null;
     }
 
+    /**
+     * TODO
+     * 推荐文章
+     * @return
+     */
+    @RequestMapping("/recommmend")
+    @ResponseBody
+    public List<Map> recommmend(){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("coverUrl","tmp/pdf.jpg");
+        map.put("docUrl","/doc/view?md5=5314004295490880485d1587f5d0577c");
+        ArrayList<Map> maps = new ArrayList<>();
+        maps.add(map);
+        return maps;
+    }
+
+
+    /**
+     * TODO
+     * 下载文件-PDF格式
+     * @param md5
+     * @param response
+     * @param request
+     * @throws IOException
+     * @throws URISyntaxException
+     */
+    @RequestMapping("/download")
+    @ResponseBody
+    public void download(String md5, HttpServletResponse response, HttpServletRequest request) throws IOException, URISyntaxException {
+        //通过md5从数据库中获取文件对象
+        Optional<Doc> docOptional = docService.findByMd5(md5);
+        if (docOptional.isPresent()) {
+            //如果存在，获取文件实体
+            Doc doc = docOptional.get();
+            //获取文件名
+            String docName = doc.getDocName();
+            //获取文件路径+名字
+            String docPath=doc.getDocDir()+"/"+doc.getDocName();
+            //将其转化为PDF格式
+            String viewName = docName.substring(0, docName.indexOf(".")) + ".pdf";
+            String viewPath = doc.getDocDir() + "/" + viewName;
+            log.info("doc path:{}",docPath);
+            String tmpDir=DocController.class.getClassLoader().getResource("static/tmp").getPath();
+            HdfsUtil.download(viewPath,tmpDir);
+            response.setContentType("text/html");
+            response.setCharacterEncoding(request.getCharacterEncoding());
+            response.setContentType("application/octet-stream");
+            FSDataInputStream dataInputStream = FileSystem.get(new Configuration()).open(new Path(docPath));
+            try {
+                response.setHeader("Content-Disposition", "attachment; filename=" + doc);
+                //下载文件
+                IOUtils.copy(dataInputStream, response.getOutputStream());
+                response.flushBuffer();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (dataInputStream != null) {
+                    try {
+                        dataInputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        }
+        //return "";
+    }
+
+    /**
+     * 预览文件--PDF格式
+     * @param md5
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("/view")
     @ResponseBody
     public String view(String md5) throws IOException {

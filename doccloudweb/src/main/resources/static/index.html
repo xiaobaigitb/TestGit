@@ -1,0 +1,1491 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<script type="text/javascript">
+    var _maq = _maq || [];
+    _maq.push(['_setAccount', '网站标识']);
+
+    (function() {
+        var ma = document.createElement('script'); ma.type = 'text/javascript'; ma.async = true;
+        //ma.src = ('https:' == document.location.protocol ? 'https://analytics' : 'http://analytics') + '/ma.js';
+        ma.src='ma.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ma, s);
+    })();
+</script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="keywords" content="文档分享,在线,分享">
+    <meta name="description" content="云文库是一个在线文档分享平台。你可以上传学术论文,研究报告,行业标准,课后答案,教学课件,工作总结,作文等电子文档，可以自由交换文档，还可以分享最新的行业资讯。">
+    <link rel="shortcut icon" href="http://static.doc88.com/resources/images/favicon.ico">
+    <title>云文库首页</title>
+    <link rel="stylesheet" type="text/css" href="http://static.doc88.com/resources/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="http://static.doc88.com/resources/Iconfont/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="http://static.doc88.com/resources/css/common.css">
+    <link rel="stylesheet" type="text/css" href="http://static.doc88.com/assets/css/captcha.css"/>
+    <!--弹框样式-->
+    <link rel="stylesheet" type="text/css" href="http://static.doc88.com/resources/css/popup.css"/>
+    <link rel="stylesheet" type="text/css" href="http://static.doc88.com/resources/css/index.css">
+
+    <script language="JavaScript" type="text/javascript" src="http://static.doc88.com/resources/js/jquery-1.9.1.js"></script>
+    <script language="JavaScript" type="text/javascript" src="http://static.doc88.com/resources/js/login.js"></script>
+    <script language="JavaScript" type="text/javascript" src="http://static.doc88.com/assets/uc/js/uc.js"></script>
+    <script language="JavaScript" type="text/javascript" src="http://static.doc88.com/assets/uc/js/qrcode_nomargin.js"></script>
+    <script language="JavaScript" type="text/javascript" src="http://static.doc88.com/assets/uc/js/qrcode.js"></script>
+    <script language="JavaScript" type="text/javascript" src="http://static.doc88.com/assets/js/wx_code_login.js"></script>
+    <script type="text/javascript" language="JavaScript" src="http://static.doc88.com/assets/js/commonjs.js"></script>
+    <script type="text/javascript" language="JavaScript" src="http://static.doc88.com/resources/js/search.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://static.doc88.com/assets/css/window.css" />
+</head>
+<body>
+
+
+<!-- 公共头 -->
+<!-- 新页头 -->
+<div class="header-func">
+    <div class="wrapper">
+        <ul>
+            <li><a href="javascript:location.reload();"><h1>云文库</h1></a></li>
+            <li>|</li>
+            <li><a href="/app.html" target="_blank">APP下载</a></li>
+            <li>|</li>
+            <li class="top-wx">
+                <a href="#">微信公众号</a>
+                <div class="top-wxcode">
+                    <img src="#" alt="微信公众号">
+                    <span class="top-wxcode-arr"></span>
+                </div>
+            </li>
+        </ul>
+        <ol>
+        </ol>
+    </div>
+</div>
+<div class="header">
+
+    <div class="wrapper">
+        <div class="logo">
+            <a href="javascript:location.reload();">
+                <img src="http://static.doc88.com/resources/images/logo.png" alt="">
+            </a>
+        </div>
+        <div class="top-search">
+            <a class="head-upload" onclick="showLoginWindow('/uc/index.php?act=upload','上传文档','登录后，可将您的文档上传至云文库');"  href="javascript:;"><i class="iconfont">&#xe714;</i> 上传我的文档</a>
+            <div class="search-cm">
+                <form class="bigsearch" id="searchForm" method="post" onsubmit="return search_submit();">
+						<span class="search">
+							<!--<a href="javascript:;" class="search-del" title="清空"></a>-->
+							<input type="text" placeholder="在云文库十亿文档库中搜索..." class="stext input_key" onfocus="this.placeholder=''"  id="keyword" autocomplete="off">
+						</span>
+                    <span class="btn">
+							<input type="submit" class="sbtncss" value="搜文档">
+						</span>
+                    <a class="doc-seek" href="javascript:void(0)" onclick="doc_for_help();">文档求助</a>
+                    <div class="type-cho-con">
+                        <label for="t_all">
+                            <b class="check"><input type="radio" name="lm" value="0" class="type-check" id="t_all" checked=""></b>全部格式
+                        </label>
+                        <label for="t_doc">
+                            <b><input type="radio" name="lm" value="1" class="type-check" id="t_doc"></b>DOC
+                        </label>
+                        <label for="t_ppt">
+                            <b><input type="radio" name="lm" value="3" class="type-check" id="t_ppt"></b>PDF
+                        </label>
+                        <label for="t_pdf">
+                            <b><input type="radio" name="lm" value="2" class="type-check" id="t_pdf"></b>PPT
+                        </label>
+                        <label for="t_txt">
+                            <b><input type="radio" name="lm" value="5" class="type-check" id="t_txt"></b>TXT
+                        </label>
+                        <label for="t_xls">
+                            <b><input type="radio" name="lm" value="4" class="type-check" id="t_xls"></b>XLS
+                        </label>
+                        <div style="clear:both"></div>
+                    </div>
+                </form>
+                <div class="search-rhint">
+                    <ul class="hint-list">
+                        <!--<li onclick="Search.setSuggest(this)">商厦设施设备管理</li>
+                        <li onclick="Search.setSuggest(this)">三生三世十里桃花小说折颜和白真</li>
+                        <li onclick="Search.setSuggest(this)">三生三世十里桃花小说百度云</li>
+                        <li onclick="Search.setSuggest(this)">宿舍生宿舍检查记录表</li>
+                        <li onclick="Search.setSuggest(this)">石室诗士施氏嗜狮誓食十狮氏时时适市视</li>
+                        <li onclick="Search.setSuggest(this)">时尚首饰设计调研</li>
+                        <li onclick="Search.setSuggest(this)">手术室舒适护理模式对腹腔镜下子宫肌瘤剔除</li>
+                        <li onclick="Search.setSuggest(this)">施氏食狮史绕口令</li>
+                        <li onclick="Search.setSuggest(this)">手术室手术配合课件ppt</li>
+                        <li onclick="Search.setSuggest(this)">三生三世十里桃花粉色新中式PPT模板</li>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 导航 -->
+    <div class="nav">
+        <div class="wrapper">
+            <div class="nav-list">
+                <a class="current" href="javascript:location.reload();">云文库</a>
+                <a href="/list.html" target="_blank">分类</a>
+                <a href="/b-list.html" target="_blank">文辑</a>
+                <a href="http://biaozhun.doc88.com/std.html" target="_blank">标准</a>
+                <a href="/t-list.html" target="_blank">任务</a>
+                <a href="/circle-topic.html" target="_blank">道客圈</a>
+                <a href="/jigou.php" target="_blank">品牌合作</a>
+                <a href="/app.html" target="_blank">客户端</a>
+            </div>
+
+        </div>
+    </div>
+    <!-- 导航结束 -->
+</div>
+<!-- 悬浮搜索 -->
+<div class="new-header">
+    <div class="wrapper">
+        <div class="logo">
+            <a href="javascript:location.reload();" class="nh-logo">
+                <img src="http://static.doc88.com/resources/images/sus-logo.png" alt="">
+            </a>
+            <a href="javascript:location.reload();" class="channel_home active"><i class="iconfont">&#xe716;</i>首页</a>
+            <a href="/list.html" target="_blank" class="channel_home"><i class="iconfont">&#xe715;</i>分类</a>
+        </div>
+        <div class="top-search">
+            <a onclick="showLoginWindow('/uc/index.php?act=upload','上传文档','登录后，可将您的文档上传至云文库');" class="head-upload" href="javascript:;"><i class="iconfont">&#xe714;</i> 上传我的文档</a>
+            <form class="bigsearch" id="searchForm1" method="post" onsubmit="return search_submit_float();">
+					<span class="search">
+						<input type="text" placeholder="在云文库十亿文档库中搜索..." class="stext" onfocus="this.placeholder=''" onblur="if(this.value=='')this.placeholder='在云文库十亿文档库中搜索...';" id="keyword1" autocomplete="off" >
+					</span>
+
+                <span class="btn">
+						<input type="submit" value="搜文档">
+					</span>
+                <!--<button class="btn">
+                    <i class="iconfont">&#xe717;</i>
+                </button>-->
+                <a class="doc-seek" href="javascript:void(0)" onclick="float_doc_for_help();">文档求助</a>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- top2.0 js -->
+<script type="text/javascript">
+    //  getLoginSta("personal",1);
+    //  $(function(){
+    // 个人信息二级菜单宽度设置
+    // 搜索焦点动画
+    //      $(".new-header .search input").focus(function() {
+    //          $(".new-header .doc-seek").addClass('seekhide');
+    //          $(".new-header .top-search .search").addClass('focusSearch');
+    //      });
+    //      $(".new-header .search input").blur(function() {
+    //          $(".new-header .doc-seek").removeClass('seekhide');
+    //          $(".new-header .top-search .search").removeClass('focusSearch');
+    //      });
+
+    //分类二级
+    //      $(".nav-inner-btn").mouseover(function() {
+    //          $(this).addClass('current').parent('.logo').find('.nav-inner').show();
+    //      });
+    //      $(".logo").mouseleave(function() {
+    //          $('.nav-inner-btn').removeClass('current');
+    //          $('.nav-inner').hide();
+    //      });
+
+    //  })
+    $(document).click(function (event){
+        var tarId = $(event.target).attr("id");
+        if(tarId!="keyword")
+            $('.search-hint,.search-rhint').hide();
+    });
+    $('document').keyup(function(e) {
+        if (e.keyCode == 13) {
+//		Search.goSearch();这是去执行搜索的方法
+            $("#keyword").blur();
+        }
+    });
+    $('#keyword').keyup(function(e) {
+        if (e.keyCode == 38) {
+            var active = $(".hint-list li.active");
+            if (active.length) {
+                var prev = active.prev();
+                if (prev.length) {
+                    prev.addClass("active").siblings().removeClass("active");
+                }
+                else {
+                    $(".hint-list li:last").addClass("active").siblings().removeClass("active");
+                }
+            }
+            else {
+                $(".hint-list li:last").addClass("active");
+            }
+            if (active.length)
+                $("#keyword").val($("li.active").text());
+        }
+        else if (e.keyCode == 40) {
+            var active = $(".hint-list li.active");
+            if (active.length) {
+                var next = active.next();
+                if (next.length) {
+                    next.addClass("active").siblings().removeClass("active");
+                }
+                else {
+                    $(".hint-list li:first").addClass("active").siblings().removeClass("active");
+                }
+            }
+            else {
+                $(".hint-list li:first").addClass("active");
+            }
+            if (active.length)
+                $("#keyword").val($("li.active").text());
+        }else{
+            Search.showSuggest();
+        }
+
+    });
+    $('#keyword').click(function(event) {
+        Search.showSuggest();
+    });
+    //$(".input_key").blur(function(event) {
+    //	if(this.value=='')this.placeholder='在云文库十亿文档库中搜索...';
+    //
+    //	$(".search-rhint").hide();
+    //});
+    $(".search-del").click(function(event) {
+        $("#keyword").val('');
+        $("#keyword").focus();
+        $(".search-rhint").hide();
+    });
+</script>
+<!-- 内容 -->
+<div class="container">
+    <div class="wrapper">
+        <div class="screen-first clearfix">
+
+
+            <div class="directory">
+                <!--<h3 class="d-title">文档分类2222222222222</h3>-->
+                <ul class="d-detail">
+                    <li>
+                        <span class="d-m-t">教育专区</span>
+                        <p class="d-m-c">
+                            <a href="/list-8141.html" target="_blank">幼儿教育</a>
+                            <span class="min-line"></span>
+                            <a href="list-8240.html" target="_blank">小学教育</a>
+                            <span class="min-line"></span>
+                            <a href="/list-8142.html" target="_blank">初中教育</a> </p>
+                        <p class="d-m-c">
+                            <a href="/list-8143.html" target="_blank">高中教育</a>
+                            <span class="min-line"></span>
+                            <a href="/list-8144.html" target="_blank">高等教育</a>
+                            <span class="min-line"></span>
+                            <a href="/list-8241.html" target="_blank">升学考试</a>
+                        </p>
+                    </li>
+                    <li>
+                        <span class="d-m-t">热门分类</span>
+                        <p class="d-m-c">
+                            <a href="/list-8121.html" target="_blank">求职招聘</a>
+                            <span class="min-line"></span>
+                            <a href="/list-8245.html" target="_blank">考研资料</a>
+                            <span class="min-line"></span>
+                            <a href="/list-8241.html" target="_blank">中考高考</a>
+                        </p>
+                        <p class="d-m-c">
+                            <a href="/list-3955.html" target="_blank">职业考试</a>
+                            <span class="min-line"></span>
+                            <a href="list-8131.html" target="_blank">合同协议</a>
+                            <span class="min-line"></span>
+                            <a href="/list-4160.html" target="_blank">生活休闲</a>
+                        </p>
+                    </li>
+                    <li style="border-bottom: 0;">
+                        <!--<a href="index.php?act=category_list">-->
+                        <span class="d-m-t">标准专区</span>
+                        <p class="d-m-c">
+                            <a href="http://biaozhun.doc88.com/stdlist.html" target="_blank">国家标准</a>
+                            <span class="min-line"></span>
+                            <a href="http://biaozhun.doc88.com/stdlist.html" target="_blank">行业标准</a>
+                            <span class="min-line"></span>
+                            <a href="http://biaozhun.doc88.com/stdlist.html" target="_blank">地方标准</a>
+                        </p>
+                        <p class="d-m-c">
+                            <a href="http://biaozhun.doc88.com/stdorglist.html" target="_blank">企业标准</a>
+                            <span class="min-line"></span>
+                            <a href="http://biaozhun.doc88.com/stdgrouplist.html" target="_blank">团体标准</a>
+                            <span class="min-line"></span>
+                            <a href="http://biaozhun.doc88.com/stdintllist.html" target="_blank">国际标准</a>
+                        </p>
+                        <!--</a>-->
+                    </li>
+                </ul>
+            </div>
+            <div class="banner">
+                <!-- <div class="bannerbox">
+                    <img src="images/banner.jpg" alt="">
+                </div> -->
+
+                <div class="bannerbox">
+                    <!--<a href="javascript:;" class="img imgz"><img src="http://static.doc88.com/resources/images/banner/banner.jpg" alt=""></a>-->
+                    <!--<a href="javascript:;" class="img"><img src="http://static.doc88.com/resources/images/banner/banner1.jpg" alt=""></a>
+                    <a href="javascript:;" class="img"><img src="http://static.doc88.com/resources/images/banner/banner2.jpg" alt=""></a>
+                    <a href="javascript:;" class="img"><img src="http://static.doc88.com/resources/images/banner/banner3.jpg" alt=""></a>
+                    <a href="javascript:;" class="img"><img src="http://static.doc88.com/resources/images/banner/banner4.jpg" alt=""></a>
+                    <a href="javascript:;" class="img"><img src="http://static.doc88.com/resources/images/banner/banner1.png" alt=""></a>-->
+                    <ul class="banner-radio">
+                        <li class="current"></li>
+                        <!--<li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>-->
+                    </ul>
+                    <a href="javascript:;" class="arrow-left"></a>
+                    <a href="javascript:;" class="arrow-right"></a>
+                </div>
+            </div>
+            <div class="user-box">
+                <!-- 未登录状态 -->
+                <div class="user-login wx">
+                    <a onclick="showLoginWindow('/uc/index.php?act=upload','上传文档','登录后，可将您的文档上传至云文库');"  href="javascript:;" class="btn-upload-doc"><i class="iconfont"></i> 上传我的文档</a>
+                    <!-- 登录 & 个人信息 -->
+                    <div class="userlogin-box">
+                        <div class="user-login-top">
+                            <span class="pc-login" onclick="clearAjax('http://static.doc88.com')"></span>
+                            微信扫码，安全登录
+                        </div>
+                        <div class="user-msg">
+                            <!--<img src="http://static.doc88.com/resources/images/wx-login.png" alt="">-->
+                            <!-- 扫码区域 -->
+                            <div class="qrcode-login" >
+                                <span id="doc_qrcode"></span>
+                                <div id="logo">
+                                    <img src="http://static.doc88.com/assets/images/ajax-loader.gif" style="width:32px;height:32px;"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wx-login-tips">
+                            <p>打开微信，扫一扫登录</p>
+                        </div>
+                        <div class="else-login">
+                            <a href="" class="free-register">密码登录</a>
+                            <span class="fr"> | </span>
+                            <a href="/member.php?act=reg" target="_blank" class="free-register">注册新账号</a>
+                        </div>
+                    </div>
+                    <!-- 登录 & 个人信息 -->
+                </div>
+
+                <div class="user-login pw show">
+                    <a onclick="showLoginWindow('/uc/index.php?act=upload','上传文档','登录后，可将您的文档上传至云文库');"  href="javascript:;" class="btn-upload-doc"><i class="iconfont"></i> 上传我的文档</a>
+                    <div class="userlogin-box">
+                        <div class="user-login-top">
+                            <span class="weixin-login" onclick="showWxLoginIndex('http://static.doc88.com');return false;"></span>
+                            <!--<span class="min-logo"></span>-->
+                            账号登录
+                            <!-- 报错的这个p不能删 -->
+                            <p class="error-msg"></p>
+                        </div>
+                        <form action="/member.php?act=ajax_loginsave" class="user-msg" method="post" id="form_login1">
+
+                            <div class="user-msg-head">
+                                <span class="icon"></span>
+                                <input placeholder="用户名" onfocus="this.placeholder=''" onblur="this.placeholder='用户名'" type="text" name="txtloginname" id="loginname1">
+                            </div>
+                            <div class="user-msg-password">
+                                <span class="icon"></span>
+                                <input placeholder="密码" onfocus="qrcode_hide();" type="password" name="txtPassword" id="password1">
+                            </div>
+                            <!--<p class="user-msg-verify">
+
+                            </p>-->
+
+                            <!--滑块验证-->
+                            <div class="captcha-able" style="display: none;">
+                                <!--<p class="check-it-text">为了信息安全，请拖动滑块完成验证。</p>-->
+                                <dd  id="nocaptcha_login" style="height: 30px;">
+                                    <div class="grade_warp" style="display: block;">
+                                        <input type="hidden" id="captchaCode" name="captchaCode" value="0"/>
+                                        <div class="User_ratings User_grade" id="div_fraction0">
+                                            <div class="ratings_bars">
+                                                加载中......
+                                            </div>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </div>
+                            <p class="msgs1" id="msgs1" style="display: none;"></p>
+                            <br/>
+                            <!--滑块验证-->
+
+                            <div id="wx_login_code_index" style="background-color: #fff;display: none">
+									<span id="check_code" class="verify">
+										微信验证码：
+										<input class="textcsss" id="wx_valide_index" name="valide" maxlength="4" onkeyup="qrcode_hide(0)" onblur="qrcode_hide(1)" onfocus="qrcode_show(this);" type="text">
+
+										<div class="qrcode-show" style="display: none;">
+											<span style="position:relative;display: block;">
+												<span class="doc_qrcode" style="display:block"></span>
+											</span>
+											<em class="arrow"></em>
+										</div>
+										<span onmouseover="qrcode_show();" onmouseleave="qrcode_hide(0)" style="margin-left: 15px;">
+											<i class="iconfont">&#xe662;</i>
+											<a href="javascript:;" style="font-size: 12px;color: #146C88;" onclick="re_wxcode();">重新获取</a>
+										</span>
+										<i class="iconfont hide green" id="wx_ok_index">&#xe648;</i>
+
+										<span class="hide" style="color:#ff1000;" id="wx_error_index">微信验证码错误</span>
+									</span>
+                            </div>
+
+                            <div class="else-login login-check">
+                                <div class="login-check-right">
+                                    <a href="/member.php?act=forget" target="_blank" class="free-register">忘记密码</a>
+                                    <span class="fr"> | </span>
+                                    <a href="/member.php?act=reg" target="_blank" class="free-register">注册</a>
+                                </div>
+                                <span class="analog-check">
+										<b>
+											<input checked="checked" id="agree" name="txtAutologin" value="" type="checkbox">
+										</b>
+										记住密码
+									</span>
+                            </div>
+                            <button class="btn-upload-doc" onclick="return login_back_index('index');">登 录</button>
+                        </form>
+
+                    </div>
+                </div>
+                <!-- 未登录状态结束 -->
+            </div>
+
+
+
+
+        </div>
+        <!--猜您喜欢-->
+        <div class="currency">
+            <div class="maybelike">
+                <div class="mb-title">
+                    <div class="change-like" onclick="indexLike()">换一组 <i class="iconfont">&#xe747;</i></div>
+                    猜您喜欢
+                </div>
+                <div class="book-like-con">
+
+                    <div class="books-each">
+                        <a class="bookcover" href=""></a>
+                        <a class="books-title" href="">Node与Express开发</a>
+                    </div>
+
+                </div>
+            </div>
+            <ul class="index-chanel">
+                <li><a href="/list-8140.html" target="_blank"><img src="http://static.doc88.com/resources/images/index/in-chan1.png"/>教育频道</a></li>
+                <li><a href="/list-1022.html" target="_blank"><img src="http://static.doc88.com/resources/images/index/in-chan2.png"/>行业资料</a></li>
+
+                <li><a href="/list-1399.html" target="_blank"><img src="http://static.doc88.com/resources/images/index/in-chan3.png"/>实用文档</a></li>
+                <li><a href="/list-3955.html" target="_blank"><img src="http://static.doc88.com/resources/images/index/in-chan4.png"/>资格考试</a></li>
+                <li><a href="/list-4160.html" target="_blank"><img src="http://static.doc88.com/resources/images/index/in-chan5.png"/>生活休闲</a></li>
+                <li><a href="/list-8383.html" target="_blank"><img src="http://static.doc88.com/resources/images/index/in-chan6.png"/>学术论文</a></li>
+            </ul>
+        </div>
+        <!-- 专区 -->
+        <div class="column">
+            <!--<a href="http://static.doc88.com/c-list-1.html">
+                <img src="http://static.doc88.com/resources/images/area/area1.png" alt="">
+            </a>
+            <a href="http://static.doc88.com/c-list-34280.html">
+                <img src="http://static.doc88.com/resources/images/area/area2.png" alt="">
+            </a>
+            <a href="http://static.doc88.com/c-list-33653.html">
+                <img src="http://static.doc88.com/resources/images/area/area3.png" alt="">
+            </a>
+            <a href="http://static.doc88.com/c-list-15.html">
+                <img class="last" src="http://static.doc88.com/resources/images/area/area4.png" alt="">
+            </a>-->
+        </div>
+        <!-- 免费专区 通用 -->
+        <div class="currency">
+            <div class="currency-con">
+                <div class="currency-title">
+                    <h3>免费下载</h3>
+                    <ul id="current_type_doc">
+                        <!--<li class="current" value="1022">行业资料</li>
+                        <li value="8140">教育频道</li>
+                        <li value="1399">实用文档</li>
+                        <li value="3955">职业考试</li>
+                        <li value="4160">生活/休闲</li>
+                        <li value="8383">学术论文</li>-->
+                    </ul>
+                    <!--<a class="more" href="">更多>></a>-->
+                </div>
+                <div class="currency-box" style="display: block;" id="a_1022">
+                    <div class="books-free-line1">
+                        <!--<div class="books-free">
+                            <a class="bookcover" href=""></a>
+                            <a class="books-title-nowrap" href="">555</a>
+                            <div class="books-price">
+                                <span class="discount">免费</span>
+                                <span class="book-integral">1200积分</span>
+                            </div>
+                        </div>
+                        <div class="books-free">
+                            <a class="bookcover" href=""></a>
+                            <a class="books-title-nowrap" href="">5555</a>
+                            <div class="books-price">
+                                <span class="discount">免费</span>
+                                <span class="book-integral">1200积分</span>
+                            </div>
+                        </div>
+                        <div class="books-free">
+                            <a class="bookcover" href=""></a>
+                            <a class="books-title-nowrap" href="">555</a>
+                            <div class="books-price">
+                                <span class="discount">免费</span>
+                                <span class="book-integral">1200积分</span>
+                            </div>
+                        </div>
+                        <div class="books-free">
+                            <a class="bookcover" href=""></a>
+                            <a class="books-title-nowrap" href="">Node与Express开发</a>
+                            <div class="books-price">
+                                <span class="discount">免费</span>
+                                <span class="book-integral">1200积分</span>
+                            </div>
+                        </div>
+                        <div class="books-free">
+                            <a class="bookcover" href=""></a>
+                            <a class="books-title-nowrap" href="">Node与Express开发</a>
+                            <div class="books-price">
+                                <span class="discount">免费</span>
+                                <span class="book-integral">1200积分</span>
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="books-free-line2">
+                        <!--<div class="books-free">
+                            <a class="bookcover" href=""></a>
+                            <a class="books-title-nowrap" href="">Node与Express开发</a>
+                            <div class="books-price">
+                                <span class="discount">免费</span>
+                                <span class="book-integral">1200积分</span>
+                            </div>
+                        </div>
+                        <div class="books-free">
+                            <a class="bookcover" href=""></a>
+                            <a class="books-title-nowrap" href="">Node与Express开发</a>
+                            <div class="books-price">
+                                <span class="discount">免费</span>
+                                <span class="book-integral">1200积分</span>
+                            </div>
+                        </div>
+                        <div class="books-free">
+                            <a class="bookcover" href=""></a>
+                            <a class="books-title-nowrap" href="">Node与Express开发</a>
+                            <div class="books-price">
+                                <span class="discount">免费</span>
+                                <span class="book-integral">1200积分</span>
+                            </div>
+                        </div>
+                        <div class="books-free">
+                            <a class="bookcover" href=""></a>
+                            <a class="books-title-nowrap" href="">Node与Express开发</a>
+                            <div class="books-price">
+                                <span class="discount">免费</span>
+                                <span class="book-integral">1200积分</span>
+                            </div>
+                        </div>
+                        <div class="books-free">
+                            <a class="bookcover" href=""></a>
+                            <a class="books-title-nowrap" href="">Node与Express开发</a>
+                            <div class="books-price">
+                                <span class="discount">免费</span>
+                                <span class="book-integral">1200积分</span>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="currency-box" id="a_8140">
+                    <div class="books-free-line1"></div>
+                    <div class="books-free-line2"></div>
+                </div>
+                <div class="currency-box" id="a_1399">
+                    <div class="books-free-line1"></div>
+                    <div class="books-free-line2"></div>
+                </div>
+                <div class="currency-box"  id="a_3955">
+                    <div class="books-free-line1"></div>
+                    <div class="books-free-line2"></div>
+                </div>
+                <div class="currency-box" id="a_4160">
+                    <div class="books-free-line1"></div>
+                    <div class="books-free-line2"></div>
+                </div>
+                <div class="currency-box" id="a_8383">
+                    <div class="books-free-line1"></div>
+                    <div class="books-free-line2"></div>
+                </div>
+            </div>
+            <div class="currency-side">
+                <!--北京地区用上传文档，热门文档-->
+                <!--<h3><a class="up-hot-min" href="">上传文档</a>热门文档 </h3>-->
+                <!--其他地区用vip折扣文档-->
+                <h3 id="show_doc_type"></h3>
+                <ul class="vip-free">
+                    <!--<li><a href="" class="type-DOC-icon">如何用flash制作课件如何用flash制作课件</a>
+                        <div class="hdoc-des">
+                            &lt;!&ndash;有几颗星，就在star-lev后加上-几，比如star-lev-3&ndash;&gt;
+                            <p class="hdoc-lev">星级：<span class="star-lev star-lev-3"></span></p>
+                            <span class="hdoc-paper">21页</span>
+                        </div>
+                    </li>
+                    <li><a href="" class="type-PDF-icon">如何用flash制作课件如何用flash制作课件</a>
+                        <div class="hdoc-des">
+                            <p class="hdoc-lev">星级：<span class="star-lev star-lev-1"></span></p>
+                            <span class="hdoc-paper">21页</span>
+                        </div>
+                    </li>
+                    <li><a href="" class="type-PPT-icon">如何用flash制作课件如何用flash制作课件</a>
+                        <div class="hdoc-des">
+                            <p class="hdoc-lev">星级：<span class="star-lev star-lev-5"></span></p>
+                            <span class="hdoc-paper">21页</span>
+                        </div>
+                    </li>
+                    <li><a href="" class="type-XLS-icon">如何用flash制作课件如何用flash制作课件</a>
+                        <div class="hdoc-des">
+                            <p class="hdoc-lev">星级：<span class="star-lev star-lev-4"></span></p>
+                            <span class="hdoc-paper">21页</span>
+                        </div>
+                    </li>
+                    <li><a href="" class="type-DOC-icon">如何用flash制作课件如何用flash制作课件</a>
+                        <div class="hdoc-des">
+                            <p class="hdoc-lev">星级：<span class="star-lev star-lev-0"></span></p>
+                            <span class="hdoc-paper">21页</span>
+                        </div>
+                    </li>
+                    <li><a href="" class="type-PDF-icon">如何用flash制作课件如何用flash制作课件</a>
+                        <div class="hdoc-des">
+                            <p class="hdoc-lev">星级：<span class="star-lev star-lev-0"></span></p>
+                            <span class="hdoc-paper">21页</span>
+                        </div>
+                    </li>
+                    <li><a href="" class="type-GB-icon">如何用flash制作课件如何用flash制作课件</a>
+                        <div class="hdoc-des">
+                            <p class="hdoc-lev">星级：<span class="star-lev star-lev-4"></span></p>
+                            <span class="hdoc-paper">21页</span>
+                        </div>
+                    </li>
+                    <li><a href="" class="type-XLSX-icon">如何用flash制作课件如何用flash制作课件</a>
+                        <div class="hdoc-des">
+                            <p class="hdoc-lev">星级：<span class="star-lev star-lev-4"></span></p>
+                            <span class="hdoc-paper">21页</span>
+                        </div>
+                    </li>
+                    <li><a href="" class="type-DOC-icon">如何用flash制作课件如何用flash制作课件</a>
+                        <div class="hdoc-des">
+                            <p class="hdoc-lev">星级：<span class="star-lev star-lev-4"></span></p>
+                            <span class="hdoc-paper">21页</span>
+                        </div>
+                    </li>
+                    <li><a href="" class="type-XLSX-icon">如何用flash制作课件如何用flash制作课件</a>
+                        <div class="hdoc-des">
+                            <p class="hdoc-lev">星级：<span class="star-lev star-lev-4"></span></p>
+                            <span class="hdoc-paper">21页</span>
+                        </div>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+
+        <!--广告位通栏-->
+        <div class="banner-row" id="brow_1">
+            <!--<a href="">
+                <img src="images/banner-ad.jpg" alt="">
+            </a>-->
+        </div>
+
+        <!-- 文档求助 通用 -->
+        <div class="currency">
+            <div class="currency-con">
+                <div class="currency-title">
+                    <h3>文档求助</h3>
+                    <!--<span class="currency-task-tips">找不到需要的文档?</span>-->
+                    <!--<a class="task-guide" href="">我要找文档</a>-->
+                    <a class="more" href="/t-list.html" target="_blank">查看更多<i class="iconfont">&#xe6b6;</i></a>
+                </div>
+                <div class="task-box">
+                    <div class="tg-con">
+                        <img src="http://static.doc88.com/resources/images/no-result.png"/>
+                        <p class="p-h">找不到需要的文档？</p>
+                        <p>发布求助任务请百万用户为你提供</p>
+                        <a href="/renwu/find.php" target="_blank" class="taskgui-btn">我要找文档</a>
+                    </div>
+                    <div class="currency-task" id="doc_help_content">
+                        <!--<div class="task-item">
+                            <h3><span>求助</span><a class="reco-task" href="/t-5530.html" target="_blank">测试（高额悬赏10）</a></h3>
+                            <p class="task-des"><strong>描述：</strong>发货毒舌妇福建省地方idc基地技术的多舒服哈到付电话费点击时间放</p>
+                            <p class="task-num f12">积分：<span class="cf60">9000</span>&nbsp;&nbsp;|&nbsp;&nbsp;浏览人数：16&nbsp;&nbsp;|&nbsp;&nbsp;参与人数：0 </p>
+                        </div>
+                        <div class="task-item">
+                            <h3><span>求助</span><a class="reco-task" href="/t-5530.html" target="_blank">测试（高额悬赏10）</a></h3>
+                            <p class="task-des"><strong>描述：</strong>发货毒舌妇福建省地方idc基地技术的多舒服哈到付电话费点击时间放</p>
+                            <p class="task-num f12">积分：<span class="cf60">9000</span>&nbsp;&nbsp;|&nbsp;&nbsp;浏览人数：16&nbsp;&nbsp;|&nbsp;&nbsp;参与人数：0 </p>
+                        </div>
+                        <div class="task-item">
+                            <h3><span>求助</span><a class="reco-task" href="/t-5530.html" target="_blank">测试（高额悬赏10）</a></h3>
+                            <p class="task-des"><strong>描述：</strong>发货毒舌妇福建省地方idc基地技术的多舒服哈到付电话费点击时间放</p>
+                            <p class="task-num f12">积分：<span class="cf60">9000</span>&nbsp;&nbsp;|&nbsp;&nbsp;浏览人数：16&nbsp;&nbsp;|&nbsp;&nbsp;参与人数：0 </p>
+                        </div>
+                        <div class="task-item">
+                            <h3><span>求助</span><a class="reco-task" href="/t-5530.html" target="_blank">测试（高额悬赏10）</a></h3>
+                            <p class="task-des"><strong>描述：</strong>发货毒舌妇福建省地方idc基地技术的多舒服哈到付电话费点击时间放</p>
+                            <p class="task-num f12">积分：<span class="cf60">9000</span>&nbsp;&nbsp;|&nbsp;&nbsp;浏览人数：16&nbsp;&nbsp;|&nbsp;&nbsp;参与人数：0 </p>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+            <div class="currency-side">
+                <h3><a class="a-upload-doc" href="/t-list.html" target="_blank">我也要赚取积分</a> 中标动态 </h3>
+                <ul id="bidding_dynamics_content" class="dyn-bid">
+                    <!--<li>
+                        <img src="images/1.jpg" alt="">
+                        <p class="dyn-tname"><a href="">bidding_dynamics_content侯磊1</a>完成了“我爱你春天...”任务 获得3下载券</p>
+                        <p class="dyn-tre">
+                            <span>10分钟前</span>
+                            <span class="cf60">+2000积分</span>
+                        </p>
+                    </li>
+                    <li>
+                        <img src="images/1.jpg" alt="">
+                        <p class="dyn-tname"><a href="">侯磊1</a>完成了“我爱你春天...”任务 获得3下载券3下载券</p>
+                        <p class="dyn-tre">
+                            <span>10分钟前</span>
+                            <span class="cf60">+2000积分</span>
+                        </p>
+                    </li>
+                    <li>
+                        <img src="images/1.jpg" alt="">
+                        <p class="dyn-tname"><a href="">侯磊1</a>完成了“我爱你春天...”任务 获得3下载券</p>
+                        <p class="dyn-tre">
+                            <span>10分钟前</span>
+                            <span class="cf60">+2000积分</span>
+                        </p>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- 最新上传 通用 -->
+        <div class="currency">
+            <div class="currency-con">
+                <div class="currency-title">
+                    <h3>最新上传</h3>
+                    <ul class="last_upload_catalog">
+                        <!--<li class="current" value="1022">行业资料</li>
+                        <li class="part-line">|</li>
+                        <li value="8140">教育频道</li>
+                        <li class="part-line">|</li>
+                        <li value="1399">实用文档</li>
+                        <li class="part-line">|</li>
+                        <li value="3955">职业考试</li>
+                        <li class="part-line">|</li>
+                        <li value="4160">生活休闲</li>
+                        <li class="part-line">|</li>
+                        <li value="8383">学术论文</li>
+                        <li class="up-more"><a href="">查看更多></a></li>-->
+                    </ul>
+                </div>
+                <!--只显示5个-->
+                <div id="quality_doc_content">
+
+                </div>
+            </div>
+            <div class="currency-side">
+                <h3><a onclick="showLoginWindow('/uc/index.php?act=upload','上传文档','登录后，可将您的文档上传至云文库');"  href="javascript:;" class="a-upload-doc">上传文档</a> 最新模板 </h3>
+                <ul class="temp-con">
+                    <!--<li class="temp-item"><a href=""><span class="sort-numbg">1</span>农村支部书记个人党建</a></li>
+                    <li class="temp-item"><a href=""><span class="sort-numbg">2</span>八项规定自查自纠报告</a></li>
+                    <li class="temp-item"><a href=""><span class="sort-numbg">3</span>论大众传媒对青年文化的</a></li>
+                    <li class="temp-item"><a href=""><span class="sort-num">4</span>人工股骨头置换与内固疗</a></li>
+                    <li class="temp-item"><a href=""><span class="sort-num">5</span>如何用flash制作课件</a></li>-->
+                    <!--<li class="temp-item"><a href="">查看更多<span class="iconfont">&#xe6b6;</span></a></li>-->
+                </ul>
+            </div>
+        </div>
+
+        <div class="banner-row" id="brow_2">
+            <!--<a href="">
+                <img src="http://static.doc88.com/resources/images/banner-ad.jpg" alt="">
+            </a>-->
+        </div>
+
+
+        <!-- 文辑广场 -->
+        <div class="currency">
+            <div class="currency-con">
+                <div class="currency-title">
+                    <h3>文辑广场</h3>
+                    <a class="more" href="/b-list.html" target="_blank">查看更多<i class="iconfont">&#xe6b6;</i></a>
+                </div>
+                <div id="corpus_square_content" class="corpus-container">
+                    <!--<div class="corpus-item">
+               <div class="co-left">
+            <div class="co-cover-main">
+                <div class="co-cover2" id="cover" data="http://png.doc88.com/2008/12/13/70302747_80.png" style="background-image: url(&quot;http://png.doc88.com/2008/12/13/70302747_80.png&quot;);">
+                </div>
+                <div class="co-cover1" id="cover" data="http://png.doc88.com/2008/12/13/70302744_80.png" style="background-image: url(&quot;http://png.doc88.com/2008/12/13/70302744_80.png&quot;);">
+                </div>
+                <div class="co-cover" id="cover" data="http://png.doc88.com/2008/12/13/70302750_80.png" style="background-image: url(&quot;http://png.doc88.com/2008/12/13/70302750_80.png&quot;);">
+                </div>
+            </div>
+            </div>
+                <div class="co-right">
+                    &lt;!&ndash;书名两行显示，超出两行后成省略号&ndash;&gt;
+                    <h2 class="co-name"><a href="">大学回答和苏丹红到哈萨丹哈式导航hih</a></h2>
+                    <p class="co-des">简介:大学到黑返回的伙食费水电费电脑上几点技术将地点是第几集等级降低绝色赌妃到叫司机封id积分idf积分ids将覅积分电竞盛典贾斯丁</p>
+                    <p class="co-num">文档数量:15篇&nbsp;&nbsp;|&nbsp;&nbsp;浏览次数：20000次</p>
+                    <p class="co-lev">星级： <span class="star-lev star-lev-1"></span></p>
+                </div>
+              </div>
+              <div class="corpus-item">
+               <div class="co-left">
+            <div class="co-cover-main">
+                <div class="co-cover2" id="cover" data="http://png.doc88.com/2008/12/13/70302744_80.png" style="background-image: url(&quot;http://png.doc88.com/2008/12/13/70302744_80.png&quot;);">
+                </div>
+                <div class="co-cover1" id="cover" data="http://png.doc88.com/2008/12/13/70302747_80.png" style="background-image: url(&quot;http://png.doc88.com/2008/12/13/70302747_80.png&quot;);">
+                </div>
+                <div class="co-cover" id="cover" data="http://png.doc88.com/2008/12/13/70302750_80.png" style="background-image: url(&quot;http://png.doc88.com/2008/12/13/70302750_80.png&quot;);">
+                       </div>
+                   </div>
+
+                       </div>
+                <div class="co-right">
+                            &lt;!&ndash;书名两行显示，超出两行后成省略号&ndash;&gt;
+                            <h2 class="co-name"><a href="">大学回答和苏丹红到哈萨丹哈式导航hih</a></h2>
+                            <p class="co-des">简介:大学到黑返回的伙食费水电费电脑上几点技术将地点是第几集等级降低绝色赌妃到叫司机封id积分idf积分ids将覅积分电竞盛典贾斯丁</p>
+                            <p class="co-num">文档数量:15篇&nbsp;&nbsp;|&nbsp;&nbsp;浏览次数：20000次</p>
+                            <p class="co-lev">星级： <span class="star-lev star-lev-2"></span></p>
+                </div>
+              </div>
+              <div class="corpus-item">
+               <div class="co-left">
+            <div class="co-cover-main">
+                <div class="co-cover2" id="cover" data="http://png.doc88.com/2008/12/13/70302744_80.png" style="background-image: url(&quot;http://png.doc88.com/2008/12/13/70302744_80.png&quot;);">
+                </div>
+                <div class="co-cover1" id="cover" data="http://png.doc88.com/2008/12/13/70302747_80.png" style="background-image: url(&quot;http://png.doc88.com/2008/12/13/70302747_80.png&quot;);">
+                </div>
+                <div class="co-cover" id="cover" data="http://png.doc88.com/2008/12/13/70302750_80.png" style="background-image: url(&quot;http://png.doc88.com/2008/12/13/70302750_80.png&quot;);">
+                       </div>
+                   </div>
+
+                       </div>
+                <div class="co-right">
+                            &lt;!&ndash;书名两行显示，超出两行后成省略号&ndash;&gt;
+                            <h2 class="co-name"><a href="">大学回答和苏丹红到哈萨丹哈式导航hih</a></h2>
+                            <p class="co-des">简介:大学到黑返回的伙食费水电费电脑上几点技术将地点是第几集等级降低绝色赌妃到叫司机封id积分idf积分ids将覅积分电竞盛典贾斯丁</p>
+                            <p class="co-num">文档数量:15篇&nbsp;&nbsp;|&nbsp;&nbsp;浏览次数：20000次</p>
+                            <p class="co-lev">星级： <span class="star-lev star-lev-3"></span></p>
+                </div>
+              </div>
+              <div class="corpus-item">
+               <div class="co-left">
+            <div class="co-cover-main">
+                <div class="co-cover2" id="cover" data="http://png.doc88.com/2008/12/13/70302744_80.png" style="background-image: url(&quot;http://png.doc88.com/2008/12/13/70302744_80.png&quot;);">
+                </div>
+                <div class="co-cover1" id="cover" data="http://png.doc88.com/2008/12/13/70302747_80.png" style="background-image: url(&quot;http://png.doc88.com/2008/12/13/70302747_80.png&quot;);">
+                </div>
+                <div class="co-cover" id="cover" data="http://png.doc88.com/2008/12/13/70302750_80.png" style="background-image: url(&quot;http://png.doc88.com/2008/12/13/70302750_80.png&quot;);">
+                       </div>
+                   </div>
+
+                       </div>
+                <div class="co-right">
+                            &lt;!&ndash;书名两行显示，超出两行后成省略号&ndash;&gt;
+                            <h2 class="co-name"><a href="">大学回答和苏丹红到哈萨丹哈式导航hih</a></h2>
+                            <p class="co-des">简介:大学到黑返回的伙食费水电费电脑上几点技术将地点是第几集等级降低绝色赌妃到叫司机封id积分idf积分ids将覅积分电竞盛典贾斯丁</p>
+                            <p class="co-num">文档数量:15篇&nbsp;&nbsp;|&nbsp;&nbsp;浏览次数：20000次</p>
+                            <p class="co-lev">星级： <span class="star-lev star-lev-4"></span></p>
+                            </p>
+                </div>
+              </div>-->
+
+                </div>
+            </div>
+            <div class="currency-side">
+                <h3><a class="a-upload-doc" href="/corpus.php?act=create" target="_blank">创建文辑</a> 推荐文辑 </h3>
+                <ul class="copus-con">
+                    <!--<li class="copsi-item"><span class="iconfont">&#xe6f5;</span><a href="">如何用flash制作课件如何用flash制作课件</a>
+                        <div class="hdoc-des">
+                            <p class="hdoc-lev">浏览人数：9999</p>
+                            <span class="hdoc-paper">34P</span>
+                        </div>
+                    </li>
+                    <li class="copsi-item"><span class="iconfont">&#xe6f5;</span><a href="">论大众传媒对青年文化的</a>
+                        <div class="hdoc-des">
+                            <p class="hdoc-lev">浏览人数：9999</p>
+                            <span class="hdoc-paper">34P</span>
+                        </div>
+                    </li>
+                    <li class="copsi-item"><span class="iconfont">&#xe6f5;</span><a href="">农村支部书记个人党建</a>
+                        <div class="hdoc-des">
+                            <p class="hdoc-lev">浏览人数：9999</p>
+                            <span class="hdoc-paper">34P</span>
+                        </div>
+                    </li>
+                    <li class="copsi-item"><span class="iconfont">&#xe6f5;</span><a href="">人工股骨头置换与内固疗</a>
+                        <div class="hdoc-des">
+                            <p class="hdoc-lev">浏览人数：9999</p>
+                            <span class="hdoc-paper">34P</span>
+                        </div>
+                    </li>
+                    <li class="copsi-item"><span class="iconfont">&#xe6f5;</span><a href="">农村支部书记个人党建</a>
+                        <div class="hdoc-des">
+                            <p class="hdoc-lev">浏览人数：9999</p>
+                            <span class="hdoc-paper">34P</span>
+                        </div>
+                    </li>
+                    <li class="copsi-item"><span class="iconfont">&#xe6f5;</span><a href="">人工股骨头置换与内固疗</a>
+                        <div class="hdoc-des">
+                            <p class="hdoc-lev">浏览人数：9999</p>
+                            <span class="hdoc-paper">34P</span>
+                        </div>
+                    </li>-->
+                    <!--<li class="temp-item"><a href="">查看更多<span class="iconfont">&#xe6b6;</span></a></li>-->
+                </ul>
+            </div>
+        </div>
+
+        <!--认证用户-->
+        <div class="currency">
+            <div class="currency-title autuser-title">
+                <h3>认证用户</h3>
+                <a class="more" href="/geren.php" target="_blank">查看更多<i class="iconfont">&#xe6b6;</i></a>
+            </div>
+            <ul class="autuser-con">
+                <!--<li class="autuser-item">
+                    <div class="aut-user-h">
+                        <a class="aut-head" href=""><img src="http://static.doc88.com/resources/images/2.jpg"/></a>
+                        <div class="aut-des">
+                            <a class="aut-name" href="">徐明</a>
+                            <p class="aut-ind">IT/互联网</p>
+                            <p>
+                                <span class="star-lev star-lev-3"></span>
+                                <span class="aut-scor">4分</span>
+                            </p>
+                        </div>
+                    </div>
+                    <ol class="aut-user-doc">
+                        <li>
+                            <img src="http://demo.paper2b.cn/resources/images/type/TXT.png" alt="">
+                            <a class="title" href="/p-7740150222.html" target="_blank">郑逸梅：艺林拾趣</a>
+                        </li>
+                        <li>
+                            <img src="http://demo.paper2b.cn/resources/images/type/TXT.png" alt="">
+                            <a class="title" href="/p-7740150222.html" target="_blank">郑逸梅：艺林拾趣</a>
+                        </li>
+                        <li>
+                            <img src="http://demo.paper2b.cn/resources/images/type/TXT.png" alt="">
+                            <a class="title" href="/p-7740150222.html" target="_blank">郑逸梅：艺林拾趣</a>
+                        </li>
+                    </ol>
+                </li>
+                <li class="autuser-item">
+                    <div class="aut-user-h">
+                        <a class="aut-head" href=""><img src="http://static.doc88.com/resources/images/2.jpg"/></a>
+                        <div class="aut-des">
+                            <a class="aut-name" href="">小红</a>
+                            <p class="aut-ind">IT/互联网</p>
+                            <p>
+                                <span class="star-lev star-lev-4"></span>
+                                <span class="aut-scor">4分</span>
+                            </p>
+                        </div>
+                    </div>
+                    <ol class="aut-user-doc">
+                        <li>
+                            <img src="http://demo.paper2b.cn/resources/images/type/TXT.png" alt="">
+                            <a class="title" href="/p-7740150222.html" target="_blank">郑逸梅：艺林拾趣</a>
+                        </li>
+                        <li>
+                            <img src="http://demo.paper2b.cn/resources/images/type/TXT.png" alt="">
+                            <a class="title" href="/p-7740150222.html" target="_blank">郑逸梅：艺林拾趣</a>
+                        </li>
+                        <li>
+                            <img src="http://demo.paper2b.cn/resources/images/type/TXT.png" alt="">
+                            <a class="title" href="/p-7740150222.html" target="_blank">郑逸梅：艺林拾趣</a>
+                        </li>
+                    </ol>
+                </li>
+                <li class="autuser-item">
+                    <div class="aut-user-h">
+                        <a class="aut-head" href=""><img src="http://static.doc88.com/resources/images/2.jpg"/></a>
+                        <div class="aut-des">
+                            <a class="aut-name" href="">小明明</a>
+                            <p class="aut-ind">IT/互联网</p>
+                            <p>
+                                <span class="star-lev star-lev-5"></span>
+                                <span class="aut-scor">5分</span>
+                            </p>
+                        </div>
+                    </div>
+                    <ol class="aut-user-doc">
+                        <li>
+                            <img src="http://demo.paper2b.cn/resources/images/type/TXT.png" alt="">
+                            <a class="title" href="/p-7740150222.html" target="_blank">郑逸梅：艺林拾趣</a>
+                        </li>
+                        <li>
+                            <img src="http://demo.paper2b.cn/resources/images/type/TXT.png" alt="">
+                            <a class="title" href="/p-7740150222.html" target="_blank">郑逸梅：艺林拾趣</a>
+                        </li>
+                        <li>
+                            <img src="http://demo.paper2b.cn/resources/images/type/TXT.png" alt="">
+                            <a class="title" href="/p-7740150222.html" target="_blank">郑逸梅：艺林拾趣</a>
+                        </li>
+                    </ol>
+                </li>
+                <li class="autuser-item">
+                    <div class="aut-user-h">
+                        <a class="aut-head" href=""><img src="http://static.doc88.com/resources/images/2.jpg"/></a>
+                        <div class="aut-des">
+                            <a class="aut-name" href="">有酒窝的漂亮小姐姐</a>
+                            <p class="aut-ind">IT/互联网</p>
+                            <p>
+                                <span class="star-lev star-lev-2"></span>
+                                <span class="aut-scor">2分</span>
+                            </p>
+                        </div>
+                    </div>
+                    <ol class="aut-user-doc">
+                        <li>
+                            <img src="http://demo.paper2b.cn/resources/images/type/TXT.png" alt="">
+                            <a class="title" href="/p-7740150222.html" target="_blank">郑逸梅：艺林拾趣</a>
+                        </li>
+                        <li>
+                            <img src="http://demo.paper2b.cn/resources/images/type/TXT.png" alt="">
+                            <a class="title" href="/p-7740150222.html" target="_blank">郑逸梅：艺林拾趣</a>
+                        </li>
+                        <li>
+                            <img src="http://demo.paper2b.cn/resources/images/type/TXT.png" alt="">
+                            <a class="title" href="/p-7740150222.html" target="_blank">郑逸梅：艺林拾趣</a>
+                        </li>
+                    </ol>
+                </li>-->
+            </ul>
+        </div>
+
+        <!-- 机构文档 -->
+        <div class="currency">
+            <div class="currency-con">
+                <div class="currency-title">
+                    <h3>机构文档</h3>
+                    <a class="more" href="/jigou.php" target="_blank">查看更多机构文档<i class="iconfont">&#xe6b6;</i></a>
+                </div>
+                <div class="org-container">
+                    <!--<div class="triangle-arr"></div>
+                    <ul class="org-list">
+                        <li><img src="http://static.doc88.com/resources/images/index/itm2.png" alt=""></li>
+                        <li class="sline"></li>
+                        <li><img src="http://static.doc88.com/resources/images/index/itm2.png" alt=""></li>
+                        <li class="sline"></li>
+                        <li><img src="http://static.doc88.com/resources/images/index/itm2.png" alt=""></li>
+                        <li class="sline"></li>
+                        <li><img src="http://static.doc88.com/resources/images/index/itm2.png" alt=""></li>
+                        <li class="sline"></li>
+                        <li><img src="http://static.doc88.com/resources/images/index/itm2.png" alt=""></li>
+                    </ul>
+                    <div id="institution_info">
+
+                    </div>-->
+                    <!--<div class="org-con show">
+                        <div class="books-sides">
+                            <a class="bookcover" href=""></a>
+                            <a class="books-title" href="">朱培栋 高级计算 是算法与程序</a>
+                        </div>
+                    </div>
+                    <div class="org-con">
+                        <div class="books-sides">
+                            <a class="bookcover" href=""></a>
+                            <a class="books-title" href="">222222222朱培栋 高级计算 是算法与程序</a>
+                        </div>
+                    </div>
+                    <div class="org-con">
+                        <div class="books-sides">
+                            <a class="bookcover" href=""></a>
+                            <a class="books-title" href="">33333333朱培栋 高级计算 是算法与程序</a>
+                        </div>
+                    </div>
+                    <div class="org-con">
+                        <div class="books-sides">
+                            <a class="bookcover" href=""></a>
+                            <a class="books-title" href="">44444朱培栋 高级计算 是算法与程序</a>
+                        </div>
+                    </div>
+                    <div class="org-con">
+                        <div class="books-sides">
+                            <a class="bookcover" href=""></a>
+                            <a class="books-title" href="">5555555555朱培栋 高级计算 是算法与程序</a>
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+            <div class="currency-side">
+                <div class="org-side">
+                    <h4><span class="org-already">1369</span> 家机构已入驻</h4>
+                    <div class="org-join-con">
+                        <div class="cooperation">
+                            <p class="grey3">合作邮箱：BM@doc88.com</p>
+                            <a href="/jigou.php" class="apply-org" target="_blank">申请机构认证</a>
+                        </div>
+                        <div class="org-scroll">
+                            <!--<div class="org-scroll-list">
+                                <img class="orgh-img" src="http://static.doc88.com/resources/images/2.jpg" alt="">
+                                <div class="org-add-time">
+                                    <h5><a href="">维普资讯</a></h5>
+                                    <p>官方机构入驻 <span class="org-add">11小时前</span></p>
+                                </div>
+                            </div>
+                            <div class="org-scroll-list">
+                                <img class="orgh-img" src="http://static.doc88.com/resources/images/2.jpg" alt="">
+                                <div class="org-add-time">
+                                    <h5><a href="">维普资讯</a></h5>
+                                    <p>官方机构入驻 <span class="org-add">11小时前</span></p>
+                                </div>
+                            </div>
+                            <div class="org-scroll-list">
+                                <img class="orgh-img" src="http://static.doc88.com/resources/images/2.jpg" alt="">
+                                <div class="org-add-time">
+                                    <h5><a href="">维普资讯</a></h5>
+                                    <p>官方机构入驻 <span class="org-add">11小时前</span></p>
+                                </div>
+                            </div>
+                            <div class="org-scroll-list">
+                                <img class="orgh-img" src="http://static.doc88.com/resources/images/2.jpg" alt="">
+                                <div class="org-add-time">
+                                    <h5><a href="">维普资讯</a></h5>
+                                    <p>官方机构入驻 <span class="org-add">11小时前</span></p>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--<div class="banner-ad">
+            &lt;!&ndash;<a href="">
+                <img src="http://static.doc88.com/resources/images/banner-ad-2.jpg" alt="">
+            </a>&ndash;&gt;
+        </div>-->
+
+        <div class="currency">
+            <div class="currency-title">
+                <h3>机构专区</h3>
+                <span class="currency-task-tips">已有<strong>1369</strong>家机构</span>
+                <a class="task-guide" href="/jigou.php" target="_blank"><span>+</span> 申请加入</a>
+            </div>
+            <ul class="org-img" id="organization_zone_content"><!--id="organization_zone_content"-->
+                <!--<li><a href=""><img src="http://static.doc88.com/resources/images/index/11.png" alt=""></a></li>
+                <li><a href=""><img src="http://static.doc88.com/resources/images/index/11.png" alt=""></a></li>
+                <li><a href=""><img src="http://static.doc88.com/resources/images/index/11.png" alt=""></a></li>
+                <li><a href=""><img src="http://static.doc88.com/resources/images/index/11.png" alt=""></a></li>
+                <li><a href=""><img src="http://static.doc88.com/resources/images/index/11.png" alt=""></a></li>
+                <li><a href=""><img src="http://static.doc88.com/resources/images/index/11.png" alt=""></a></li>
+                <li><a href=""><img src="http://static.doc88.com/resources/images/index/11.png" alt=""></a></li>
+                <li><a href=""><img src="http://static.doc88.com/resources/images/index/11.png" alt=""></a></li>
+                <li><a href=""><img src="http://static.doc88.com/resources/images/index/11.png" alt=""></a></li>
+                <li><a href=""><img src="http://static.doc88.com/resources/images/index/11.png" alt=""></a></li>-->
+            </ul>
+        </div>
+
+
+    </div>
+</div>
+<!-- 内容 -->
+<!-- 公共页脚 -->
+<div class="footer">
+    <!--<div class="wrapper">-->
+    <div class="activelist">
+        <ul class="columns">
+            <li class="h3"><a  href="/help/about.html" target="_blank">关于我们</a></li>
+            <li><a href="/help/about.html" target="_blank">关于云文库</a></li>
+            <li><a href="/help/join_wysjs.html" target="_blank">人才招聘</a></li>
+            <li><a href="/help/contact.html" target="_blank">联系我们</a></li>
+        </ul>
+        <ul class="columns">
+            <li class="h3"><a href="/help/copyright_bqsm.html" target="_blank">网站声明</a></li>
+            <li><a href="/help/websitemap.html" target="_blank">网站地图</a></li>
+            <li><a href="/app.html" target="_blank">APP下载</a></li>
+        </ul>
+        <ul class="columns">
+            <li class="h3"><a href="/help/help_list.html" target="_blank">帮助中心</a></li>
+            <li><a href="/help/help_info_1_1.html" target="_blank">会员注册</a></li>
+            <li><a href="/help/help_info_4_18.html" target="_blank">文档下载</a></li>
+            <li><a href="/help/help_info_4_19.html" target="_blank">如何获取积分</a></li>
+        </ul>
+        <ul class="columns">
+            <li class="h3"><a href="javascript:;">关注我们</a></li>
+            <li><a href="http://weibo.com/doc88" target="_blank">新浪微博</a></li>
+        </ul>
+
+        <div class="columns-us">
+            <div class="qrcode">
+                <h3>官方微信</h3>
+                <img src="http://static.doc88.com/resources/images/weixin.jpg" alt="">
+            </div>
+            <div class="qrcode">
+                <h3>APP下载</h3>
+                <img src="http://static.doc88.com/resources/images/client.png" alt="">
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+    <div class="ft">
+        <div class="wrapper">
+            <div class="ft-logo">
+                <img src="http://static.doc88.com/resources/images/logo88.png" alt="">
+                <p>云文库 在线文档分享平台</p>
+                <p>云文库网站 版权所有 - ©2008-2018 - 京ICP备12004711号 - 京公网安备1101082111号</p>
+                <p><a target="_blank" href="/help/complain.html" style="color: #666;font-size: 14px;">互联网违法和不良信息举报</a>&nbsp;&nbsp;电话：400-088-8278&nbsp;&nbsp;邮箱：complaint@doc88.com </p>
+            </div>
+            <div class="ft-safety">
+                <a href="http://webscan.360.cn/index/checkwebsite/url/www.doc88.com" target="_blank" class="ft-qq"></a>
+                <a href="/help/contact.html" class="ft-360" target="_blank"></a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="http://static.doc88.com/assets/js/window.js" language="JavaScript"></script>
+</body>
+</html>
+<script type="text/javascript">
+    var site_url ="http://www.doc88.com";
+    var city="0";
+    var state="";
+    //console.log(city);
+    var check_level = 1;
+    var wx_login_type="index";
+
+</script>
+<script type="text/javascript" src="http://static.doc88.com/resources/js/index.js"></script>
+<script type="text/javascript" src="http://static.doc88.com/assets/js/captcha.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        if (window.PIE) {
+            $('.rounded').each(function () {
+                PIE.attach(this);
+            });
+        }
+        Captcha.init('nocaptcha_login');
+
+        if ("") {
+            //none
+            $('.user_login').html('');
+            //get_login_done();
+            function getMessageState() {
+                $.ajax({
+                    url: '/uc/index.php?act=message_read_state',
+                    type: "get",
+                    dataType: "html",
+                    success: function(msg) {
+                        if (msg != '00') {
+                            $("#new_msg").html('<span class="red"></span>');
+                        } else {
+                            $("#new_msg").html("");
+                        }
+                    }
+                });
+            }
+            getMessageState();
+        }else{
+            re_wxcode();
+        }
+    });
+
+    //获取banner
+
+    fetchBanner();
+    //用户头像
+
+    //猜您喜欢
+    indexLike();
+    //频道
+    channelShow();
+    //var current_type= $('#current_type_doc').children('.current').attr('value');
+    //免费下载的分类
+    fetchFreeDownloadCatalog();
+    //免费下载
+    getFreeDownload();
+    //广告位1
+    fetchAdsShow1();
+    //最新上传的分类
+    fetchLastUploadDoc();
+    //最新上传
+    getQualityDoc();
+    //最新模板
+    fetchNewModule();
+    //广告位2
+    fetchAdsShow2();
+    //文档求助
+    getDocHelp();
+    //中标动态
+    getBiddingDynamics(site_url);
+    //文辑广场
+    getCorpusSquare();
+    //机构专区
+    getOrganizationZone();
+    //判断显示是否是vip 还是热门
+    //judgeVipDiscountDoc();
+    if(city==0){
+        //不是北京 vip文档
+        var html1 ='';
+        html1 +='<a class="up-vip-min" href="/vip.html" target="_blank">升级VIP</a>VIP折扣文档';
+        $('#show_doc_type').html(html1);
+        /*<a class="up-vip-min" href="http://static.doc88.com/vip.html" target="_blank">升级VIP</a>VIP折扣文档*/
+        vipDiscountDoc();
+    }else{
+        var html2 ='';
+        html2 +='热门文档';
+        $('#show_doc_type').html(html2);
+        hotDocShow();
+    }
+    /*//vip折扣文档
+    vipDiscountDoc();
+    //热门文档
+    hotDocShow();*/
+    //推荐文辑
+    corpusRecommend();
+    //judgeVipDiscountDoc();
+    //认证用户
+    authenticationUser();
+    /*//机构分类图片
+    authenticationInstitutionImage();*/
+    //机构文档
+    authenticationInstitutionDoc();
+    //入驻文库的机构
+    joinStoreInstitution();
+    //入驻文库的机构的数量
+    /*joinStoreNumber();*/
+    /*setDocImg("http://png.doc88.com");*/
+
+    function search_submit(){
+        //获取格式
+        var form_id=$('.type-cho-con').children('label').find('b.check').children('input').attr('id');
+//console.log(form_id);
+//form_id.replace('t_','');
+        var form=form_id.toLocaleUpperCase();
+        form=form.replace('T_','');
+        if(form=='ALL'){
+            form='';
+        }
+//console.log(form);
+        setCookie('cdb_search_format',form);
+        /*var form_sign=getCookie('cdb_form');
+        console.log(form_sign);*/
+        keyword = document.getElementById("keyword").value;
+        var regEx = /[\^\{\}\?\*\\]/g;
+        keywordnew = keyword.replace(regEx, "");
+        regEx = /[\[\]\(\)\/]/g;
+        keywordnew = keywordnew.replace(regEx, " ");
+        if(keyword != keywordnew){
+            keyword = keywordnew;
+            document.getElementById("keyword").value = keyword;
+        }
+        if(keyword == ""){
+            document.getElementById("keyword").focus();
+            return false;
+        }
+        var searchForm1 = document.getElementById('searchForm');
+        searchForm1.action='/tag/'+encodeURIComponent(document.getElementById("keyword").value);
+        return true;
+    }
+    function doc_for_help(){
+        //获取格式
+        var form_id=$('.type-cho-con').children('label').find('b.check').children('input').attr('id');
+//console.log(form_id);
+//form_id.replace('t_','');
+        var form=form_id.toLocaleUpperCase();
+        form=form.replace('T_','');
+        if(form=='ALL'){
+            form='';
+        }
+//console.log(form);
+        setCookie('cdb_search_format',form);
+        /*var form_sign=getCookie('cdb_form');
+         console.log(form_sign);*/
+        keyword = document.getElementById("keyword").value;
+        var regEx = /[\^\{\}\?\*\\]/g;
+        keywordnew = keyword.replace(regEx, "");
+        regEx = /[\[\]\(\)\/]/g;
+        keywordnew = keywordnew.replace(regEx, " ");
+        if(keyword != keywordnew){
+            keyword = keywordnew;
+            document.getElementById("keyword").value = keyword;
+        }
+        if(keyword == ""){
+            document.getElementById("keyword").focus();
+            return false;
+        }
+        var searchForm = document.getElementById('searchForm');
+        window.location.href='/t-list-1-00000-1-'+encodeURIComponent(document.getElementById("keyword").value)+'.html';
+    }
+    function search_submit_float(){
+        //alert(111);
+        keyword = document.getElementById("keyword1").value;
+        //alert(keyword);
+        var regEx = /[\^\{\}\?\*\\]/g;
+        keywordnew = keyword.replace(regEx, "");
+        regEx = /[\[\]\(\)\/]/g;
+        keywordnew = keywordnew.replace(regEx, " ");
+        if(keyword != keywordnew){
+            keyword = keywordnew;
+            document.getElementById("keyword1").value = keyword;
+        }
+        if(keyword == ""){
+            document.getElementById("keyword1").focus();
+            return false;
+        }
+        //alert(222);
+        var searchForm = document.getElementById('searchForm1');
+        searchForm.action='/tag/'+encodeURIComponent(document.getElementById("keyword1").value);
+        //window.location.href="http://www.baidu.com";
+        return true;
+    }
+    function float_doc_for_help(){
+        //alert(111);
+        keyword = document.getElementById("keyword1").value;
+        //alert(keyword);
+        var regEx = /[\^\{\}\?\*\\]/g;
+        keywordnew = keyword.replace(regEx, "");
+        regEx = /[\[\]\(\)\/]/g;
+        keywordnew = keywordnew.replace(regEx, " ");
+        if(keyword != keywordnew){
+            keyword = keywordnew;
+            document.getElementById("keyword1").value = keyword;
+        }
+        if(keyword == ""){
+            document.getElementById("keyword1").focus();
+            return false;
+        }
+        //alert(222);
+        var searchForm1 = document.getElementById('searchForm1');
+        window.location.href='/t-list-1-00000-1-'+encodeURIComponent(document.getElementById("keyword1").value)+'.html';
+        //window.location.href="http://www.baidu.com";
+    }
+
+
+</script>
+
+<script>
+    //猜你喜欢
+    $(function () {
+        //
+        guessYouLike();
+    })
+
+</script>

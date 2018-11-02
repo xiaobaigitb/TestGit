@@ -6,18 +6,13 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
 import java.io.IOException;
 
-/*
-*@ClassName:FullTextIndexUtil
- @Description:TODO
- @Author:
- @Date:2018/10/31 15:21 
- @Version:v1.0
-*/
+/**
+ * 使用solr建立索引
+ */
 public class FullTextIndexUtil {
     static SolrClient solrclient;
     static final String SOLR_URL = "http://192.168.228.13:8984/solr/doccloud";
